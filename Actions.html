@@ -282,6 +282,27 @@ body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .t
 .cnt .cb{display:inline-block;width:15px;height:16.5px;line-height:0}
 .cnt .cb svg{width:100%;height:100%}
 
+/* ---------- 暗証番号ロック（Notes と同じ） ---------- */
+body.locked .top,body.locked .scroll,body.locked .tabs,body.locked .dogstrip{visibility:hidden}
+.lockwrap{position:fixed;inset:0;z-index:999;background:var(--bg);display:none;align-items:center;justify-content:center}
+.lockwrap.on{display:flex}
+.lockbox{text-align:center;font-family:var(--fdisp)}
+.lock-t{font-size:26px;font-weight:600;color:var(--brown);letter-spacing:.12em;margin-bottom:6px}
+.lock-s{font-size:12.5px;color:var(--muted);margin-bottom:20px}
+.lock-in{width:150px;padding:12px 10px;font-size:26px;letter-spacing:.5em;text-align:center;
+  border:1px solid var(--line);border-radius:11px;background:var(--panel);outline:none;color:var(--ink);font-family:var(--fdisp)}
+.lock-in:focus{border-color:var(--brown);box-shadow:0 0 0 3px #ece4da}
+.lockpad{display:grid;grid-template-columns:repeat(3,64px);gap:12px;justify-content:center;margin-top:18px}
+.lockpad button{height:64px;border-radius:50%;border:1px solid var(--line);background:var(--panel);
+  font:500 24px var(--fdisp);color:var(--ink);box-shadow:var(--shadow)}
+.lockpad button:active{background:#efe8e3;transform:scale(.96)}
+.lockpad button[data-lk="⌫"]{font-size:20px;color:var(--muted);box-shadow:none;border-color:transparent;background:none}
+.lock-e{height:18px;margin-top:12px;font-size:12px;color:#c0392b}
+.shake{animation:shk .38s}
+@keyframes shk{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.pinrow{display:flex;gap:8px;margin-bottom:8px}
+.pinrow input{width:110px!important;letter-spacing:.4em;text-align:center}
+
 /* ---------- 花火（One Step と同じ） ---------- */
 .fwlayer{position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden}
 .fw{position:absolute;width:0;height:0;pointer-events:none;transform:scale(var(--fs,1.3))}
@@ -340,6 +361,14 @@ body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .t
 <div class="shwrap" id="shwrap"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
 <div class="fwlayer" id="fwLayer"></div>
+<div class="lockwrap" id="lockwrap">
+  <div class="lockbox">
+    <div class="lock-t">Actions</div>
+    <div class="lock-s">暗証番号を入力してください</div>
+    <input class="lock-in" id="lockPin" type="password" inputmode="numeric" maxlength="4" autocomplete="off">
+    <div class="lock-e" id="lockErr"></div>
+  </div>
+</div>
 
 <script>
 'use strict';
@@ -817,6 +846,17 @@ function renderSettings(){
     <div class="stat" id="sStat">${esc(syncStatusText())}</div>
     <div class="hint">Notes とは別の Gist を使ってください（同じにすると上書きし合います）。トークンは Notes と同じものを使えます。書くと数秒後に自動で送られ、開いたときと一定間隔ごとに、新しいものを自動で取り込みます。両方の端末で別々に書いた内容は、項目ごとに新しい方が残ります。</div>
   </div>
+  <div class="card"><h3>ロック（暗証番号）</h3>
+    ${prefs.pin ? `
+      <div class="pinrow"><input type="password" id="pinA" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="今の番号"></div>
+      <div class="brow"><button class="btn ghost" id="pinGo">ロックを解除</button></div>`
+    : `
+      <div class="pinrow"><input type="password" id="pinA" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="4桁">
+        <input type="password" id="pinB" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="確認"></div>
+      <div class="brow"><button class="btn ghost" id="pinGo">暗証番号を設定</button></div>`}
+    <div class="hint" id="pinMsg">${prefs.pin ? 'いまロックがかかっています。正しい番号を入れると外せます。'
+      : '設定すると、次に開くときから4桁の番号を聞かれます。番号はこの端末だけに保存されるので、スマホとパソコンでそれぞれ設定してください。'}</div>
+  </div>
   <div class="card"><h3>表示</h3>
     <label class="chk"><input type="checkbox" id="pHide"${prefs.hideDone ? ' checked' : ''}>One-offs の完了したものを隠す</label>
     <label class="chk" style="margin-top:8px"><input type="checkbox" id="pSound"${prefs.sound !== false ? ' checked' : ''}>Done を押したときの音</label>
@@ -844,6 +884,23 @@ function renderSettings(){
       sync.gist = await ghCreate(); lsSet(SK, sync); $('sGist').value = sync.gist;
       await syncNow(true);
     }catch(err){ setStat(errText(err), true); }
+  };
+  document.querySelectorAll('.pinrow input').forEach(el => {
+    el.oninput = () => { el.value = el.value.replace(/\D/g, '').slice(0, 4); };
+    el.onkeydown = e => { if(e.key === 'Enter') $('pinGo').click(); };
+  });
+  const pinMsg = (m, err) => { $('pinMsg').innerHTML = err ? `<span style="color:#c0392b">${esc(m)}</span>` : esc(m); };
+  $('pinGo').onclick = () => {
+    const a = $('pinA').value;
+    if(!prefs.pin){
+      const b = $('pinB').value;
+      if(!/^\d{4}$/.test(a)) return pinMsg('数字4桁で入力してください', true);
+      if(a !== b) return pinMsg('確認用と一致しません', true);
+      prefs.pin = pinHash(a); lsSet(PK, prefs); render(); toast('暗証番号を設定しました');
+    }else{
+      if(pinHash(a) !== prefs.pin) return pinMsg('番号が違います', true);
+      delete prefs.pin; lsSet(PK, prefs); render(); toast('ロックを解除しました');
+    }
   };
   $('pHide').onchange = e => { prefs.hideDone = e.target.checked; lsSet(PK, prefs); };
   $('pSound').onchange = e => { prefs.sound = e.target.checked; lsSet(PK, prefs); if(prefs.sound) fanfare(false); };
@@ -1242,6 +1299,60 @@ const DOGS = (function(){
   return {toggle(v){ navH(); v ? start() : stop(); }, navH};
 })();
 
+/* ---------------- 暗証番号ロック（Notes と同じ動き） ---------------- */
+const pinHash = s => {
+  let x = 5381; const t = 'actions.' + s;
+  for(let i = 0; i < t.length; i++) x = ((x * 33) ^ t.charCodeAt(i)) >>> 0;
+  return x.toString(36);
+};
+function showLock(){
+  const w = $('lockwrap'), inp = $('lockPin'), err = $('lockErr');
+  w.classList.add('on'); document.body.classList.add('locked');
+  /* スマホ・タブレットは数字ボタンを出す */
+  if(window.matchMedia && matchMedia('(pointer:coarse)').matches && !w.querySelector('.lockpad')){
+    inp.readOnly = true; inp.setAttribute('inputmode', 'none');
+    w.querySelector('.lockbox').insertAdjacentHTML('beforeend', `<div class="lockpad">${
+      ['1','2','3','4','5','6','7','8','9','','0','⌫'].map(n => n ? `<button type="button" data-lk="${n}">${n}</button>` : '<span></span>').join('')}</div>`);
+    w.querySelectorAll('[data-lk]').forEach(b => b.addEventListener('click', e => {
+      e.preventDefault();
+      const n = b.dataset.lk;
+      if(n === '⌫') inp.value = inp.value.slice(0, -1);
+      else { inp.value = (inp.value + n).slice(0, 4); check(); }
+    }));
+  }
+  const locked = () => document.body.classList.contains('locked');
+  const grab = () => { if(locked() && !inp.readOnly && document.activeElement !== inp) inp.focus({preventScroll:true}); };
+  setTimeout(grab, 0); setTimeout(grab, 60);
+  const tries = setInterval(grab, 250); setTimeout(() => clearInterval(tries), 4000);
+  const onKey = e => {
+    if(!locked() || e.target === inp) return;
+    if(/^[0-9]$/.test(e.key)){ e.preventDefault(); inp.value = (inp.value + e.key).slice(0, 4); check(); }
+    else if(e.key === 'Backspace'){ e.preventDefault(); inp.value = inp.value.slice(0, -1); }
+  };
+  const onFocus = () => setTimeout(grab, 0);
+  document.addEventListener('keydown', onKey, true);
+  window.addEventListener('focus', onFocus);
+  w.addEventListener('mousedown', onFocus);
+  function check(){
+    if(inp.value.length < 4) return;
+    if(pinHash(inp.value) === prefs.pin){
+      clearInterval(tries);
+      document.removeEventListener('keydown', onKey, true);
+      window.removeEventListener('focus', onFocus);
+      w.removeEventListener('mousedown', onFocus);
+      w.classList.remove('on'); document.body.classList.remove('locked');
+      inp.value = ''; err.textContent = '';
+      DOGS.navH();
+    }else{
+      err.textContent = '番号が違います';
+      const bx = w.querySelector('.lockbox');
+      bx.classList.add('shake'); setTimeout(() => bx.classList.remove('shake'), 400);
+      inp.value = ''; grab();
+    }
+  }
+  inp.oninput = () => { inp.value = inp.value.replace(/\D/g, '').slice(0, 4); check(); };
+}
+
 /* ---------------- 起動 ---------------- */
 let toastT;
 function toast(m){ const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2200); }
@@ -1251,6 +1362,7 @@ $('tabs').addEventListener('click', e => {
 });
 load();
 if(!['habit', 'once', 'word', 'set'].includes(prefs.tab)) prefs.tab = 'habit';
+if(prefs.pin) showLock();
 render();
 DOGS.toggle(prefs.dog !== false);
 if(syncOn()){ setDot(''); setTimeout(() => syncNow(false), 400); }
