@@ -67,23 +67,21 @@ body[data-tab=set]{--tc:#ddd6cf;--acc:#a8957f;--accsoft:#eee8e1;--rgb:168,149,12
 .cite{text-align:right;font-size:12.5px;color:#6e6668;margin:-4px 16px 0;padding-bottom:11px;letter-spacing:.02em;font-weight:400}
 .cite i{font-style:italic}
 body[data-tab=word],body[data-tab=word] .row,body[data-tab=word] .row *,body[data-tab=word] .sheet,body[data-tab=word] .sheet *,
-body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .cntL,body[data-tab=word] .toast{font-family:var(--fserif)}
+body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .toast{font-family:var(--fserif)}
 .meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
 .chip{font-size:11px;letter-spacing:.02em;color:var(--muted);background:var(--line2);border-radius:99px;padding:1px 9px;line-height:1.7}
 .chip.today{background:var(--accsoft);color:var(--acc);font-weight:700}
 .chip.over{background:#f8e6e0;color:var(--warn);font-weight:600}
 .chip.rep{background:#efe9e0;color:var(--brown)}
-.right{flex:0 0 auto;display:flex;align-items:center;gap:8px;align-self:center}
-.cntL{display:inline-flex;align-items:center;gap:3px;font:600 13px var(--fdisp);color:var(--acc);white-space:nowrap}
-.cntL .cb{display:inline-block;width:15px;height:16.5px;line-height:0}
-.cntL .cb svg{width:100%;height:100%}
-.right .cnt{display:none}
-/* スマホ：回数は数字だけ、Done ボタンの下に */
-@media (max-width:640px){
-  .right{flex-direction:column;gap:3px;align-self:flex-start;padding-top:1px}
-  .right .cntL{display:none}
-  .right .cnt{display:block}
-}
+/* 回数は数字だけ、カードの右下に（Done ボタンは右上） */
+.right{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:3px;align-self:stretch;justify-content:space-between;padding-top:1px}
+.right .cnt{margin-bottom:-4px}
+.cntD{display:inline-flex;align-items:center;gap:3px;white-space:nowrap}
+.cntD .cb{display:inline-block;width:14px;height:15.4px;line-height:0}
+.cntD .cb svg{width:100%;height:100%}
+.cntM{display:none}
+/* スマホは数字だけ */
+@media (max-width:640px){ .cntD{display:none} .cntM{display:inline} }
 .cnt{font:600 12px/1.2 var(--fdisp);color:var(--acc);min-height:14px;text-align:center;white-space:nowrap;letter-spacing:.02em}
 .dn{--lt:color-mix(in srgb,var(--acc) 58%,#fff);
   width:42px;height:42px;border-radius:50%;border:2px solid var(--lt);background:#fff;color:var(--lt);
@@ -283,6 +281,14 @@ body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .c
 .zzz i:nth-child(3){font-size:13px;animation-delay:1.1s}
 @keyframes zzzUp{0%{opacity:0;transform:translate(0,4px)}30%{opacity:.9}100%{opacity:0;transform:translate(5px,-11px)}}
 @media(prefers-reduced-motion:reduce){.walker .bob,.walker .leg-a,.walker .leg-b,.walker .tail{animation:none!important}.zzz i{animation:none;opacity:.75}}
+
+/* サンタ帽：寝るときは頭と一緒に下がる */
+.walker.sleep .santa{transform-box:view-box;transform:translate(0,3.4px)}
+.walker.sleep.zz2 .santa{transform:translate(0,3.6px) rotate(-6deg);transform-origin:25px 8px}
+/* 門松（お正月）：タブの真ん中に。犬はその前を通る */
+.kadomatsu{position:absolute;bottom:-1.5px;width:22px;transform:translateX(-50%);pointer-events:none;opacity:.95;z-index:0}
+.kadomatsu svg{width:100%;height:auto;display:block}
+.dogstrip .walker,.dogstrip .rollball{z-index:1}
 
 .walker.gt-walk svg,.walker.gt-run svg{translate:0 2px}
 .walker.pup.gt-walk svg,.walker.pup.gt-run svg{translate:0 1.2px}
@@ -601,9 +607,8 @@ function rowHTML(it){
   }
   const doneToday = it.done.length && dayOf(it.done[it.done.length - 1]) === t;
   const right = `<div class="right">
-      ${cnt ? `<span class="cntL"><i class="cb">${COAT_SVG[0]}</i>×${cnt}</span>` : ''}
       <button class="dn${(doneToday || fin) ? ' on' : ''}" data-act="done" aria-label="Done">${word ? BOOKMARK : CHECK}</button>
-      <span class="cnt">${cnt || ''}</span>
+      <span class="cnt">${cnt ? `<span class="cntD"><i class="cb">${COAT_SVG[0]}</i>×${cnt}</span><span class="cntM">${cnt}</span>` : ''}</span>
     </div>`;
   return `<div class="row ${it.tab}${fin ? ' finished' : ''}" data-id="${it.id}">
     <div class="rtop" data-act="toggle">
@@ -1215,7 +1220,7 @@ document.addEventListener('visibilitychange', () => {
 setInterval(() => { if(document.visibilityState === 'visible' && syncOn() && !edit) syncNow(false); }, 60000);
 /* 朝5時をまたいだら、Done ボタンを元の色に戻す（回数はそのまま） */
 let dayNow = today();
-setInterval(() => { const d = today(); if(d !== dayNow){ dayNow = d; if(!edit && prefs.tab !== 'set') render(); } }, 30000);
+setInterval(() => { const d = today(); if(d !== dayNow){ dayNow = d; if(!edit && prefs.tab !== 'set') render(); } DOGS.season(); }, 30000);
 
 /* ---------------- お祝いの音（Tasks のチェック音「ハープ」と同じ、響きのある音） ---------------- */
 let AC = null, REV = null, WET = null;
@@ -1395,6 +1400,47 @@ const DOGS = (function(){
     const el = document.createElement('div');
     el.className = 'walker ' + cls; el.innerHTML = DOG_SVG; strip.appendChild(el); return el;
   }
+  /* ---- 季節の飾り（One Step と同じ絵） ---- */
+  const SANTA_HAT = '<g class="santa">'
+    + '<path d="M21.2 8.4c1-4.4 4.4-7 7.4-5.4 2.2 1.2 2.6 3.5 1.8 5.6z" fill="#C4514A"/>'
+    + '<ellipse cx="25.6" cy="8.7" rx="5.2" ry="1.5" fill="#F7F1E7"/>'
+    + '<circle cx="30.6" cy="3.6" r="1.8" fill="#F7F1E7"/>'
+    + '</g>';
+  const KADOMATSU_SVG = `<svg viewBox="0 0 20 34" aria-hidden="true">
+    <rect x="5.1" y="12" width="2.6" height="14" rx="1.3" fill="#8AA773"/>
+    <rect x="8.9" y="7" width="3" height="19" rx="1.5" fill="#9BB584"/>
+    <rect x="13.1" y="14" width="2.6" height="12" rx="1.3" fill="#8AA773"/>
+    <ellipse cx="6.4" cy="12.2" rx="1.3" ry="0.6" fill="#D8E2CD"/>
+    <ellipse cx="10.4" cy="7.2" rx="1.5" ry="0.7" fill="#E2EAD9"/>
+    <ellipse cx="14.4" cy="14.2" rx="1.3" ry="0.6" fill="#D8E2CD"/>
+    <rect x="4" y="22" width="12" height="12" rx="1.4" fill="#B08A5E"/>
+    <path d="M4 25.5h12M4 30h12" stroke="#93714B" stroke-width="0.9"/>
+    <path d="M4.2 23.4h11.6" stroke="#C4514A" stroke-width="1.8"/>
+    <circle cx="7.2" cy="20" r="2.1" fill="#C4514A"/>
+    <circle cx="12.6" cy="20.8" r="1.7" fill="#E8C86A"/>
+  </svg>`;
+  /* 試しに見るとき：アドレスの最後に ?demo=xmas か ?demo=newyear を付ける */
+  const DEMO = (location.search.match(/demo=(\w+)/) || [])[1] || '';
+  const xmasNow = () => { if(DEMO) return DEMO === 'xmas'; const d = new Date(); return d.getMonth() === 11 && d.getDate() >= 20 && d.getDate() <= 25; };
+  const newYearNow = () => { if(DEMO) return DEMO === 'newyear'; const d = new Date(); return d.getMonth() === 0 && d.getDate() <= 7; };
+  let decoKey = '';
+  function season(){
+    const key = (xmasNow() ? 'x' : '') + (newYearNow() ? 'n' : '');
+    if(key === decoKey || !dog) return; decoKey = key;
+    // クリスマス（12/20〜25）は親犬にサンタ帽
+    const svg = dog.el.querySelector('svg');
+    const hat = svg.querySelector('.santa');
+    if(xmasNow() && !hat){ const bob = svg.querySelector('.bob'); bob.insertAdjacentHTML('beforeend', SANTA_HAT); }
+    if(!xmasNow() && hat) hat.remove();
+    // お正月（1/1〜7）は真ん中に門松をひと組
+    strip.querySelectorAll('.kadomatsu').forEach(n => n.remove());
+    if(newYearNow()){
+      [-13, 13].forEach(dx => {
+        const k = document.createElement('span'); k.className = 'kadomatsu';
+        k.style.left = `calc(50% + ${dx}px)`; k.innerHTML = KADOMATSU_SVG; strip.appendChild(k);
+      });
+    }
+  }
   function setPose(d, pose){
     d.el.classList.remove(...POSE);
     if(pose === 'walk') d.el.classList.add('gt-walk');
@@ -1475,13 +1521,14 @@ const DOGS = (function(){
       zzz = document.createElement('span'); zzz.className = 'zzz'; zzz.innerHTML = '<i>z</i><i>z</i><i>z</i>';
       zzz.style.bottom = '20px'; zzz.style.left = '0'; strip.appendChild(zzz);
     }
+    season();
     if(reduce){ setPose(dog, 'sit'); paint(dog); return; }
     nextMode(); last = 0; raf = requestAnimationFrame(step);
   }
   function stop(){ on = false; cancelAnimationFrame(raf); strip.classList.add('off'); }
   function navH(){ document.documentElement.style.setProperty('--navh', $('tabs').offsetHeight + 'px'); }
   addEventListener('resize', navH);
-  return {toggle(v){ navH(); v ? start() : stop(); }, navH};
+  return {toggle(v){ navH(); v ? start() : stop(); }, navH, season};
 })();
 
 /* ---------------- 暗証番号ロック（Notes と同じ動き） ---------------- */
