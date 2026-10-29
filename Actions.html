@@ -838,6 +838,34 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape' && edit) close
 /* ---------------- 設定 ---------------- */
 function renderSettings(){
   $('view').innerHTML = `
+  <div class="card"><h3>表示</h3>
+    <label class="chk"><input type="checkbox" id="pHide"${prefs.hideDone ? ' checked' : ''}>One-offsの完了タスクを隠す</label>
+    <label class="chk" style="margin-top:8px"><input type="checkbox" id="pSound"${prefs.sound !== false ? ' checked' : ''}>Sound</label>
+  </div>
+  <div class="card"><h3>ロック（暗証番号）</h3>
+    ${prefs.pin ? `
+      <div class="pinrow"><input type="text" class="pinbox" maxlength="4" inputmode="numeric" autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false" id="pinA" placeholder="今の番号"></div>
+      <div class="brow"><button class="btn ghost" id="pinGo">ロックを解除</button></div>`
+    : `
+      <div class="pinrow"><input type="text" class="pinbox" maxlength="4" inputmode="numeric" autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false" id="pinA" placeholder="4桁">
+        <input type="text" class="pinbox" maxlength="4" inputmode="numeric" autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false" id="pinB" placeholder="確認"></div>
+      <div class="brow"><button class="btn ghost" id="pinGo">暗証番号を設定</button></div>`}
+    <div class="hint" id="pinMsg">${prefs.pin ? 'いまロックがかかっています。正しい番号を入れると外せます。'
+      : '設定すると、次に開くときから4桁の番号を聞かれます。番号はこの端末だけに保存されるので、スマホとパソコンでそれぞれ設定してください。'}</div>
+  </div>
+  <div class="card"><h3>バージョン</h3>
+    <div class="stat" style="margin-top:0">${APP_VER}</div>
+    <div class="brow" style="margin-top:8px"><button class="btn ghost" id="vReload">最新版を読み込み直す</button></div>
+    <div class="hint">GitHub に上げ直したのに変わらないときに押してください（スマホの古い表示を捨てて読み込み直します）。</div>
+  </div>
+  <div class="card"><h3>データ</h3>
+    <div class="brow">
+      <button class="btn ghost" id="dExp">書き出し（JSON）</button>
+      <button class="btn ghost" id="dImp">読み込み（統合）</button>
+    </div>
+    <input type="file" id="dFile" accept=".json,application/json" style="display:none">
+    <div class="hint">読み込みは今の内容に統合されます（上書きではありません）。項目数：習慣 ${live('habit').length} ／ 単発 ${live('once').length} ／ 言葉 ${live('word').length}</div>
+  </div>
   <div class="card"><h3>同期（GitHub の非公開 Gist）</h3>
     <div class="f"><label>アクセストークン（gist 権限）</label>
       <div style="display:flex;gap:6px"><input type="password" id="sTok" value="${esc(sync.token)}" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ghp_..." style="flex:1">
@@ -852,35 +880,6 @@ function renderSettings(){
     </div>
     <div class="stat" id="sStat">${esc(syncStatusText())}</div>
     <div class="hint">Notes とは別の Gist を使ってください（同じにすると上書きし合います）。トークンは Notes と同じものを使えます。書くと数秒後に自動で送られ、開いたときと一定間隔ごとに、新しいものを自動で取り込みます。両方の端末で別々に書いた内容は、項目ごとに新しい方が残ります。</div>
-  </div>
-  <div class="card"><h3>ロック（暗証番号）</h3>
-    ${prefs.pin ? `
-      <div class="pinrow"><input type="text" class="pinbox" maxlength="4" inputmode="numeric" autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false" id="pinA" placeholder="今の番号"></div>
-      <div class="brow"><button class="btn ghost" id="pinGo">ロックを解除</button></div>`
-    : `
-      <div class="pinrow"><input type="text" class="pinbox" maxlength="4" inputmode="numeric" autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false" id="pinA" placeholder="4桁">
-        <input type="text" class="pinbox" maxlength="4" inputmode="numeric" autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false" id="pinB" placeholder="確認"></div>
-      <div class="brow"><button class="btn ghost" id="pinGo">暗証番号を設定</button></div>`}
-    <div class="hint" id="pinMsg">${prefs.pin ? 'いまロックがかかっています。正しい番号を入れると外せます。'
-      : '設定すると、次に開くときから4桁の番号を聞かれます。番号はこの端末だけに保存されるので、スマホとパソコンでそれぞれ設定してください。'}</div>
-  </div>
-  <div class="card"><h3>表示</h3>
-    <label class="chk"><input type="checkbox" id="pHide"${prefs.hideDone ? ' checked' : ''}>One-offs の完了したものを隠す</label>
-    <label class="chk" style="margin-top:8px"><input type="checkbox" id="pSound"${prefs.sound !== false ? ' checked' : ''}>Done を押したときの音</label>
-    <label class="chk" style="margin-top:8px"><input type="checkbox" id="pDog"${prefs.dog !== false ? ' checked' : ''}>タブの上を犬が歩く</label>
-  </div>
-  <div class="card"><h3>バージョン</h3>
-    <div class="stat" style="margin-top:0">${APP_VER}</div>
-    <div class="brow" style="margin-top:8px"><button class="btn ghost" id="vReload">最新版を読み込み直す</button></div>
-    <div class="hint">GitHub に上げ直したのに変わらないときに押してください（スマホの古い表示を捨てて読み込み直します）。</div>
-  </div>
-  <div class="card"><h3>データ</h3>
-    <div class="brow">
-      <button class="btn ghost" id="dExp">書き出し（JSON）</button>
-      <button class="btn ghost" id="dImp">読み込み（統合）</button>
-    </div>
-    <input type="file" id="dFile" accept=".json,application/json" style="display:none">
-    <div class="hint">読み込みは今の内容に統合されます（上書きではありません）。項目数：習慣 ${live('habit').length} ／ 単発 ${live('once').length} ／ 言葉 ${live('word').length}</div>
   </div>`;
   const keep = () => {
     sync.token = $('sTok').value.replace(/[\s\u200b\u3000"'`]/g, '');
@@ -920,7 +919,7 @@ function renderSettings(){
   $('vReload').onclick = () => { location.replace(location.pathname + '?v=' + Date.now()); };
   $('pHide').onchange = e => { prefs.hideDone = e.target.checked; lsSet(PK, prefs); };
   $('pSound').onchange = e => { prefs.sound = e.target.checked; lsSet(PK, prefs); if(prefs.sound) fanfare(false); };
-  $('pDog').onchange = e => { prefs.dog = e.target.checked; lsSet(PK, prefs); DOGS.toggle(prefs.dog); };
+
   $('dExp').onclick = () => {
     const blob = new Blob([JSON.stringify({app:'habits', v:1, at:Date.now(), items}, null, 1)], {type:'application/json'});
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
@@ -1387,7 +1386,7 @@ load();
 if(!['habit', 'once', 'word', 'set'].includes(prefs.tab)) prefs.tab = 'habit';
 if(prefs.pin) showLock();
 render();
-DOGS.toggle(prefs.dog !== false);
+DOGS.toggle(true);   // 犬はいつもいる
 if(syncOn()){ setDot(''); setTimeout(() => syncNow(false), 400); }
 </script>
 </body>
