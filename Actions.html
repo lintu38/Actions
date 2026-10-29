@@ -1630,7 +1630,7 @@ const WX = (function(){
     setTimeout(() => el.remove(), 2200);
   }
   /* 次に何かを降らせる・流すまでの間隔 */
-  const GAP = {snow:[300, 600], blossom:[1800, 4200], leaves:[2200, 5000], stars:[150000, 270000]};
+  const GAP = {snow:[300, 600], blossom:[1800, 4200], leaves:[2200, 5000], stars:[25000, 35000]};
   function tick(){
     const s = season(), g = GAP[s];
     if(document.visibilityState === 'visible' && !document.body.classList.contains('locked')){
@@ -1645,7 +1645,7 @@ const WX = (function(){
     // 開いたときから少し舞っているように、最初に何粒か
     if(s === 'snow') for(let i = 0; i < 10; i++) setTimeout(() => drift('snow'), i * 120);
     if(s === 'blossom' || s === 'leaves') for(let i = 0; i < 3; i++) setTimeout(() => drift(s), i * 600);
-    setTimeout(tick, s === 'stars' ? (DEMO ? 1500 : 60000 + Math.random() * 60000) : 800);
+    setTimeout(tick, s === 'stars' ? (DEMO ? 1500 : 15000 + Math.random() * 15000) : 800);
   }
   return {start, streak, drift, season};
 })();
