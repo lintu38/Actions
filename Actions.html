@@ -62,7 +62,7 @@ body[data-tab=set]{--tc:#ddd6cf;--acc:#a8957f;--accsoft:#eee8e1;--rgb:168,149,12
 .grip svg{width:14px;height:20px}
 .main{flex:1 1 auto;min-width:0}
 .txt{white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;font-size:15px;line-height:1.65}
-.row.habit .txt,.row.once .txt{font-weight:300;color:#2e282a}
+.row.habit .txt,.row.once .txt{font-weight:300;color:#2e282a;-webkit-text-stroke:.22px currentColor}
 .row.word .txt,.sheet textarea.serif{font-weight:400;font-size:14.5px;line-height:1.8;color:#3c3638}
 .cite{text-align:right;font-size:12.5px;color:#6e6668;margin:-4px 16px 0;padding-bottom:11px;letter-spacing:.02em;font-weight:400}
 .cite i{font-style:italic}
@@ -1015,6 +1015,7 @@ function renderSettings(){
   <div class="card"><h3>表示</h3>
     <label class="chk"><input type="checkbox" id="pHide"${prefs.hideDone ? ' checked' : ''}>One-offsの完了タスクを隠す</label>
     <label class="chk" style="margin-top:8px"><input type="checkbox" id="pSound"${prefs.sound !== false ? ' checked' : ''}>Sound</label>
+    <label class="chk" style="margin-top:8px"><input type="checkbox" id="pWx"${prefs.wx !== false ? ' checked' : ''}>季節のアニメーション</label>
   </div>
   <div class="card"><h3>ロック（暗証番号）</h3>
     ${prefs.pin ? `
@@ -1091,6 +1092,7 @@ function renderSettings(){
     }
   };
   $('vReload').onclick = () => { location.replace(location.pathname + '?v=' + Date.now()); };
+  $('pWx').onchange = e => { prefs.wx = e.target.checked; lsSet(PK, prefs); if(!prefs.wx) WX.clear(); else WX.kick(); };
   $('pHide').onchange = e => { prefs.hideDone = e.target.checked; lsSet(PK, prefs); };
   $('pSound').onchange = e => { prefs.sound = e.target.checked; lsSet(PK, prefs); if(prefs.sound) fanfare(false); };
 
@@ -1633,21 +1635,30 @@ const WX = (function(){
   const GAP = {snow:[300, 600], blossom:[1800, 4200], leaves:[2200, 5000], stars:[25000, 35000]};
   function tick(){
     const s = season(), g = GAP[s];
-    if(document.visibilityState === 'visible' && !document.body.classList.contains('locked')){
+    if(prefs.wx !== false && document.visibilityState === 'visible' && !document.body.classList.contains('locked')){
       if(s === 'stars') streak();
       else drift(s);
     }
     setTimeout(tick, g[0] + Math.random() * (g[1] - g[0]));
   }
-  function start(){
-    if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let started = false;
+  function burst(){
     const s = season();
+    if(prefs.wx === false) return;
     // 開いたときから少し舞っているように、最初に何粒か
     if(s === 'snow') for(let i = 0; i < 10; i++) setTimeout(() => drift('snow'), i * 120);
     if(s === 'blossom' || s === 'leaves') for(let i = 0; i < 3; i++) setTimeout(() => drift(s), i * 600);
+  }
+  function start(){
+    if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if(started) return; started = true;
+    burst();
+    const s = season();
     setTimeout(tick, s === 'stars' ? (DEMO ? 1500 : 15000 + Math.random() * 15000) : 800);
   }
-  return {start, streak, drift, season};
+  function clear(){ layer.innerHTML = ''; }
+  function kick(){ burst(); }
+  return {start, streak, drift, season, clear, kick};
 })();
 
 /* ---------------- 暗証番号ロック（Notes と同じ動き） ---------------- */
