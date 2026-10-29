@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Actions</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20180%20180%22%20width%3D%22180%22%20height%3D%22180%22%3E%0A%3Crect%20width%3D%22180%22%20height%3D%22180%22%20fill%3D%22%23f7f4ef%22/%3E%0A%3Crect%20x%3D%2242%22%20y%3D%2234%22%20width%3D%2296%22%20height%3D%2296%22%20rx%3D%2218%22%20fill%3D%22none%22%20stroke%3D%22%23a89077%22%20stroke-width%3D%228%22/%3E%0A%3Cpath%20d%3D%22M66%2084l16%2016%2032-34%22%20fill%3D%22none%22%20stroke%3D%22%23a89077%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%0A%3Crect%20x%3D%2234%22%20y%3D%22146%22%20width%3D%2228%22%20height%3D%228%22%20rx%3D%224%22%20fill%3D%22%23dcb866%22/%3E%3Crect%20x%3D%2262%22%20y%3D%22146%22%20width%3D%2228%22%20height%3D%228%22%20fill%3D%22%2386adb5%22/%3E%0A%3Crect%20x%3D%2290%22%20y%3D%22146%22%20width%3D%2228%22%20height%3D%228%22%20fill%3D%22%23cea1a8%22/%3E%3Crect%20x%3D%22118%22%20y%3D%22146%22%20width%3D%2228%22%20height%3D%228%22%20rx%3D%224%22%20fill%3D%22%23bfb2a2%22/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAPhUlEQVR4Aexda1RU1xVmYGCG18AMDMpDwUcjxjeKqKDxRSRBY6LWNJKmj9hmZa3mR7u6VvOvq//Stdr0R9uVNnU1jxqNUZsYwWdUFBFEokJEQTE8RJ7D8BjeDNBtJouKnHNn7uXOnHPv3Vl7Tebuc84++/v25+XOnTPn+vf3dKAhA0QG/P3wP2SAwgCKg0IMuv38UByoAioDKA4qNdiA4kANUBlAcVCpwQYUhwQNaGUIikMrlZaAE8UhgTStDEFxaKXSEnCiOCSQppUhKA6tVFoCThSHBNK0MgTFoZVKS8ApqzgkzI9DOGYAxcFxcVinhuJgXQGO50dxcFwc1qmhOFhXgOP5URwcF4d1aigO1hXgeH4UB+vicDw/ioPj4rBODcXBugIcz4/i4Lg4rFNDcbCuAMfzozg4Lg7r1FAcrCvA8fwoDo6Lwzo1fsUxzoy9+UF1WfHNy6eKTh06f2Rf3kfvHtv3juIM0obki059BkCqy4vtLQ3jALl9w684qm+VFOYdzP3gTwW5n1Rcy6+rvNnaUOPotDmHh7hlUyAxSBuSb234FoBUlOQXHN+f++Gfr5w4eL+iVGAU2yYexfHw29tnD71XUXze1lQ3MuJkS5D3Zh9xDrc11t0q+grANtZUeW8iyZH5EkenrfnisY9Kz3/Z5+iSDElxAwHstXOfFxz/D8DnKnmOxFFbefPiFx92tjVxRZDPkrG3PAT49Xe/8dmMbifiRRxV1wvLLp9ym67qO9y4lHevrIgTmFyI4/a1/MrrBZwwwjyN29cu3im9yDwNSIC9OOrvlt8rK4ZU0MYZuHuz6EH1rfFDz9/I25OxOGxN9TcunXALKTp25oKVG9Zue3Xz7je2/uy32/e+rTiDtCF5gLAgdX1U7Ay3kK/n57Y3PXDbzasdWIoDrtJLzh4VgKfz9581f1lWzlvp2XvmLk6zTEsINZkDAvQCQ7htgrQheYAwd8mqjOycLXt+lZS8VKcT4v/q2SO9jk6GiISS83ZaX+cfHx4apM1islg37ty7OH2LITiU1ke5fmNI2JKMLABoMltpKICcsgKWF+nMxNHScN/eQr2FHJv01LoXXguLsNCIU4c/LNKydvtr02f+gAanrbEW/vLSWr3tZyaOiqv5NGzTZsxJ3fRSgD6Q1kFNfr0+cGXmjumJVH1UlFxghZeNOOAGuaOjjYgZTrOpm17U6XTEVlU6dTrdig0vhJujiejgrmBj7V1ik7edbMRRe6eMDEynS928QyPnjMcZAMipG1983PP4+7rKG48f+uw9A3HAd2m25noiwlnJS8MizMSmqTkVMBrOHInJS4mJ2hrrgTRik1edDMRha6zzGxubjEofGJS84pnJfu145i9fB594J+MdHR2xN1Mv3if3l8vDQBxtD2uI2cfNmhdkMBKbNOI0BIfEzppHBNtKIY3YWS4nA3F028mXonCDSC5Uyo1jmRZPTJ5GGrGzXE4G4hga6Cdmb4qMIvo15TRFku+JDQ30+Z4HjsRhCAnzPX7eZjRQbgcPDZL/RXk1fwbiGBjoJUIyhoYT/ZpyGkJCiHiHKKdbYme5nAzEMTY6Ssze3z+A6NeUMzCIfEnuZLCs2o+BODRVbEWDRXEounzeTR7F4V1+FR0dxaHo8nk3eRSHd/lVdHQUh6LL593kURze5VfR0VEc4sunmREoDvlL3d/n6Olslz+uzyOiOOSkvL/XcfXM4TMH/n7uyL/OHXm/s71Fzug+j4XikI3yTlvzhf/ua66/74rY02m/fHx/T5fddajEVxSHPFVzdNiKTn46PDjhZzgjzuHrF3PlmYBFFBSHDKz3ObqunDg4NDgwOVZHa2NvN8tfrU1OyXMPisNzrsg94TqjIHf/QD95HQKMCTIGw6sSDcUxpaoNDfQXnTw00OugRbHGJQYGGWitnPvlFAfnUGVPzzk0WHTyU0enjRZZHxi0bN3ztFb+/SgOiTUacTqvnPpM4MOqf0DA6qzdwWEREifgYBiKQ0oRRkdHr5490tH6kDZYp9OlZe5S+np6FAetvlT/2NhY6fkv2h7WUnv4+a3Y+GJMwiyBDopoQnGILtONSyeaBH/ZvGxddhzlt0miJ2M6AMUhjv5vir56cE9oN8iFqzbNfGqRuKC89kZxiKhM5fWCbwV3o05OyZizMFVERL67ojg8rc/9W9eqrhcK9J69YMW8lAyBDsQmnp0oDo+qU3/3m1vF5wS6zvjBokWrNwt0UGITisN91Rprqm5cyhPoF5v01DIl3+yiQUNx0Jj53t/aUAMfXL8/IP3PGp8EH1zhxgapUdk+NYiju6MVzBt1aG96UHL2KNzYoAW3TE9Iy9zp768GGidjVDYq+K787KF/XDj6b7Bzh9+Hw8kIJXu62luKzxwW2G/JZIlZ9ewPA9S766GCxQHfkl/68uM+x/erJXq67HBI26RQrEQcHbYrJw4K/Hw5PDIq/flXlPuNqyeEKFgcZQUnByeuooDDwryDUFdPkAv06aMv3nGNCgmPWJP9inIXarhQuH3lVhxuMu/vdTTXV0/uNDjQdznvE0en9MXfEFl48Y4xJCwjO8cYrP6tZpQqjtGRkcnKcHmGBvov5+6Xpg8YW5h3QGDxTqDBmJ69JzjM5JpL3a9KFUeoKdJE31IeavxIH5RNkmkVdS3e6e3uoHXQBwatee5Hqt+RfRy+UsUBANKe3WUwhsAbooE+CsVcf4w4h4vOHBZYvBMQoIfPJpHR04nTqdKpYHHAVWH61pwg+vJdz68/vlu8c1RgI1i4x7Uyc6cnD9FRk0oULA4oA3yezNj6qoA+4Pzx6O+L4PUp3OOCe6BaWLwDjIkyZYsDoE5dH9pZvAN0iTLFiwPQTkUf6lq8A2TIaWoQB/AhTR9aW7wDRIkylYgDMIvVhwYX7wBLokw94gDYLn0YhD/f5j66f6rNxTtAkShTlTgAOegjXfBbD/h8m//5B8KLd+JmJac8kw3RNG5qEweUM9xsFf58OzrihG40s8YnLd/wAq1VU35/VaKF84ewPmiozTHxaZm71Lp4h4aa5lenOADtI31k7wmi3z+FPk8Y3Bpfk7U7QK9/wq/ZQ9WKAyr6/78vcODOQk3m1Vkv6xW7XYI7fFLa1SwO4CM8MsqTvy+PvqYReZqB4Ko3lYsD6udWH67FO8H4KCAga6KpXxyAV0Afmlq8A1SIMk2IAxh5pI/sHOPEJ6gZjCGaWrwDPIgyrYgDSAk3R6/f8fr45ghxs+dv3PUL+IQCTWhEBjQkDsBvCA5J3fTSlpy3snLeSt24PUjMB10YrjXTljhc1YU/LoaJf19cfnydwIAfPgDwCT7w8DEGtHjmeAw+vhViAMUhxI7G21AcGheAEHwUhxA7Gm9DcWhcAELwGYgjgLKhhcB+B0II1NVGI4FGmlfRMxAH7R7DYH+fV6HKFdyrcQb7yI/mMIaEenVeYnCOxDHU30NMUVPOgT4yCQYWOz4wEIcxmPzr5w6bsh+XJ4uIO21NxDhaOXOYomKI+Jtqq4h+TTkb6+4S8UZYphH9XnUyOHPEJMwmQrI11U99xyZiZKU4HZ3ttF/6W1k8g4GBOMzWOH0g+clWldcLlFJIb+R5pzSfGBboYrK0gIE4dDpdzAzyyaOxpkqzJ4+u9pam2ntEcUyfOQdIIzZ51clAHIAnKXkpvBKt9MKXI85hYpOKnQAZgNMAJtLpog2RxS+jOETkY41LjIqdSRzQbW8tPX+M2KRW53e7xxzroewwY41PiqZw5W1C2IgDUD2d+gy8Eq25vvrqmaNObZw/4Jxx9cwRgEykApzzl6+DVybGTByWmPiYeOpT0Jrr7xUc+7iny86EFJ9N2tNpv/jFxy0P7tNmnD5zrjkmjtbqbT8zcQCwxRlbBLaH7u5oO390X3nh6YGJ2xTDQBUY3Aktu3wKADo622hwgozBi9c8S2v1gZ+lOELDI9MydwmAHBsdrblz4/Qnfy3MO1hdftXe0iCwSahAHB6a4Bs1SB4gVJcXF+YdOH3gb7WVN8fGRgVyW5W5k+1uuCzFAbxExc5IWb8V3gibramuouRCwfH9X332z2P73lGi5X30LiQPECpK8uF2nzBeaAVazNMS4A1DYywOQD5j7sJkdT0aDUBN0ZJT1gItUwwy9eHsxQEY5qVkpKzfxuQ+D8zO1J6cXOfvD1TMS0l/soHFMRfiAOAz5i7I2JoTaDDCe80awF+77cdABScM8CIOoMMyLWHTrl8mzV+mwVMIQAbgAN9sjQUqODGOxAGMGIJDlqRvWb/j59FxiXCoEQOwG3buBeAAnyvIfInDRY3JbE1//pUNO1+H6zKTxepyqu81whIDAAEmgA2PjOIQII/icNEEEoHrsg07Xt+8+42FaRsS5y2JSZgVHhmtDwxydVDWK6QNycckzE5MXgpwMl9+E06QABBgcguEX3GMUxZqMs9ZlLZ07XOrs17euGtv9k9+s33v24ozSBuSX521e2lGFsAJCY8YB8jtGwWIg1vuVJ8Yr+JQPfFKAIjiUEKVGOWI4mBEvBKmRXEooUqMckRxMCJeCdOiOJRQJUY5ojgYEa+EaVEcSqiShznK3Q3FITejKoqH4lBRMeWG4jtxDNjvtJW/11T8+4eXfyfZYDgEgVDAw19OX5Hd7hw9LbtBqh22lltfF5ZeOll8/rhkg+EQBEJBQN+Yj8TR317RfvvDoe7aUefAVIDBcAgCoSDgVOL4cqy9rbmqvKSny+50Cj1bzm1KMByCQCgI6LazLB18JA5HA/n345IxyB5QciZuBzbWV7vtI6qD7AFps/tIHCP9rbQMpPllDygtDU9G9fc6POnmeR/ZA9Km9pE4aNOjn2cGfCSOgOAYeVkQFVDeqcVGk/0BYbIHpCHykTjCE9bTMpDmlz2gtDQ8GRU3c64n3TzvI3tA2tQ+Ekdw1IKop38aZEry10/plykwHIJAKAhIg8Sb32KdPm/xyrAIi16vn0puMByCQCgIOJU4no/1kTggIaNlvnXxm7Gr/hCf8UfJBsMhCISCgL/eskZ2m79zi+wGqZqjpy1cnr5i3XOrNm6TbDAcgkAoCOgb8504fIMHZ5GRARSHjGSqLRSKQ20VlREPikNGMlUVCsCgOIAENDIDKA4yL+gFBlAcQAIamQEUB5kX9AIDKA4gAY3MAIqDzAt6gQEUB5CARmYAxUHmhe7VUAuKQ0PFFgsVxSGWMQ31R3FoqNhioaI4xDKmof4oDg0VWyxUFIdYxjTUH8WhoWKLhSqfOMTOjP25ZwDFwX2J2CWI4mDHPfczozi4LxG7BFEc7LjnfmYUB/clYpfg/wAAAP//K3ot8wAAAAZJREFUAwDSlu8pWPWpcQAAAABJRU5ErkJggg==">
+<meta name="apple-mobile-web-app-title" content="Actions">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f7f4ef">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f4ef; --panel:#fffefd; --ink:#1f1a1c; --muted:#8b8285;
+  --line:#e8e1df; --line2:#f3edec; --brown:#54402e; --teal:#b8ced2; --teal-d:#5f8b93;
+  --done:#6f9aa2; --warn:#c0563f;
+  --fdisp:'Montserrat','Zen Kaku Gothic New','Hiragino Sans','Noto Sans JP','Yu Gothic UI',sans-serif;
+  --fserif:"Yu Mincho","YuMincho","游明朝","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --tc:#e8c98f; --acc:#b98a36; --accsoft:#f7edd7; --rgb:185,138,54;
+  --shadow:0 1px 2px rgba(30,25,15,.06),0 4px 14px rgba(30,25,15,.05);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.7 var(--fdisp);display:flex;flex-direction:column;overflow:hidden}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
+input,textarea,select{font:inherit;color:inherit}
+
+/* ---------- 上部 ---------- */
+.top{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+  padding:calc(10px + env(safe-area-inset-top)) 16px 8px;max-width:760px;width:100%;margin:0 auto}
+.ttl{font-size:16px;font-weight:600;letter-spacing:.08em;color:var(--brown);display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--tc);box-shadow:inset 0 0 0 1px rgba(0,0,0,.07);transition:background .2s}
+.dot.busy{background:var(--acc)}.dot.err{background:var(--warn)}
+.addbtn{width:38px;height:38px;border-radius:50%;background:var(--tc);color:var(--brown);
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.addbtn:active{transform:scale(.94)}
+.addbtn svg{width:20px;height:20px}
+
+body[data-tab=habit]{--tc:#e8c98f;--acc:#b98a36;--accsoft:#f7edd7;--rgb:185,138,54}
+body[data-tab=once]{--tc:#b8ced2;--acc:#5f8b93;--accsoft:#e3eef0;--rgb:95,139,147}
+body[data-tab=word]{--tc:#dfc3c6;--acc:#b58a91;--accsoft:#f4e7e8;--rgb:181,138,145}
+body[data-tab=set]{--tc:#ddd6cf;--acc:#a8957f;--accsoft:#eee8e1;--rgb:168,149,127}
+/* ---------- 一覧 ---------- */
+.scroll{flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;padding:2px 12px 56px;
+  scrollbar-width:thin;scrollbar-color:rgba(90,75,80,.2) transparent}
+.col{max-width:760px;margin:0 auto}
+.empty{text-align:center;color:var(--muted);font-size:12.5px;padding:46px 20px;line-height:2}
+.empty .eball{width:56px;margin:0 auto 10px;opacity:.85}
+
+.row{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  margin:0 0 9px;box-shadow:var(--shadow)}
+.row.drag{z-index:5;box-shadow:0 10px 28px rgba(60,45,30,.22);transition:none}
+.rtop{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;display:flex;align-items:flex-start;gap:6px;padding:11px 10px 11px 2px;cursor:pointer}
+.grip{flex:0 0 26px;align-self:stretch;display:flex;align-items:center;justify-content:center;
+  color:#c8bfc1;touch-action:none;cursor:grab}
+.grip svg{width:14px;height:20px}
+.main{flex:1 1 auto;min-width:0}
+.txt{white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;font-size:15px;line-height:1.65}
+.row.habit .txt,.row.once .txt{font-weight:300;color:#2e282a}
+.row.word .txt,.sheet textarea.serif{font-weight:400;font-size:14.5px;line-height:1.8;color:#3c3638}
+.cite{text-align:right;font-size:12.5px;color:#6e6668;margin:-4px 16px 0;padding-bottom:11px;letter-spacing:.02em;font-weight:400}
+.cite i{font-style:italic}
+body[data-tab=word],body[data-tab=word] .row,body[data-tab=word] .row *,body[data-tab=word] .sheet,body[data-tab=word] .sheet *,
+body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .toast{font-family:var(--fserif)}
+.meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.chip{font-size:11px;letter-spacing:.02em;color:var(--muted);background:var(--line2);border-radius:99px;padding:1px 9px;line-height:1.7}
+.chip.today{background:var(--accsoft);color:var(--acc);font-weight:700}
+.chip.over{background:#f8e6e0;color:var(--warn);font-weight:600}
+.chip.rep{background:#efe9e0;color:var(--brown)}
+.right{flex:0 0 auto;display:flex;align-items:center;gap:8px;align-self:center}
+.cnt{font:600 13px var(--fdisp);color:var(--acc);min-width:30px;text-align:right;white-space:nowrap}
+.dn{--lt:color-mix(in srgb,var(--acc) 58%,#fff);
+  width:42px;height:42px;border-radius:50%;border:2px solid var(--lt);background:#fff;color:var(--lt);
+  display:flex;align-items:center;justify-content:center;transition:transform .12s,background .15s,color .15s}
+.dn svg{width:22px;height:22px}
+.dn:active{transform:scale(.88)}
+.dn.on{background:var(--lt);border-color:var(--lt);color:#fff;box-shadow:0 0 12px 2px rgba(var(--rgb),.3)}
+.dn.on .bm{fill:currentColor}
+.row.word .dn svg{color:#ece2bd}
+.row.word .dn.on{color:#f6efd6}
+.row.word .dn.on svg{color:#f6efd6}
+.dn{animation:glow 2.2s ease-in-out infinite}
+.dn.on{animation:glowOn 2.2s ease-in-out infinite}
+@keyframes glowOn{0%,100%{box-shadow:0 0 0 0 rgba(var(--rgb),0),0 0 10px 2px rgba(var(--rgb),.32)}50%{box-shadow:0 0 0 6px rgba(var(--rgb),.12),0 0 20px 5px rgba(var(--rgb),.5)}}
+.row.finished .dn{animation:none}
+@keyframes glow{
+  0%,100%{box-shadow:0 0 0 0 rgba(var(--rgb),0),0 0 6px 1px rgba(var(--rgb),.25)}
+  50%{box-shadow:0 0 0 6px rgba(var(--rgb),.1),0 0 16px 4px rgba(var(--rgb),.38)}}
+@keyframes burst{0%{box-shadow:0 0 0 0 rgba(var(--rgb),.6)}100%{box-shadow:0 0 0 16px rgba(var(--rgb),0)}}
+.dn.burst{animation:burst .55s ease-out}
+@media(prefers-reduced-motion:reduce){.dn,.dn.on{animation:none;box-shadow:0 0 10px 2px rgba(var(--rgb),.35)}}
+.row.finished .txt{color:#a8a0a2;text-decoration:line-through;text-decoration-color:#cfc7c9}
+.row.finished{background:#fbf9f6}
+
+/* 展開部（ボール） */
+.ext{border-top:1px dashed var(--line);margin:0 12px;padding:10px 0 12px}
+.pile{display:flex;flex-wrap:wrap;gap:2px 1px;align-items:flex-end;padding:2px 0 4px}
+.ball{position:relative;display:inline-block;width:19px;height:21px;transform:rotate(var(--r,0deg));transform-origin:50% 90%}
+.ball svg{width:100%;height:100%;display:block;overflow:visible}
+.ball.gl svg{animation:bglow 2.4s ease-in-out var(--gd,0s) infinite}
+@keyframes bglow{
+  0%,100%{filter:drop-shadow(0 0 1px rgba(255,214,120,.55)) drop-shadow(0 0 3px rgba(255,200,90,.25))}
+  50%{filter:drop-shadow(0 0 3px rgba(255,214,120,.95)) drop-shadow(0 0 8px rgba(255,196,70,.75))}}
+@media(prefers-reduced-motion:reduce){.ball.gl svg{animation:none;filter:drop-shadow(0 0 4px rgba(255,205,90,.8))}}
+.ball.pop{animation:pop .55s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{0%{transform:translateY(-26px) scale(.3) rotate(var(--r,0deg));opacity:0}
+  100%{transform:translateY(0) scale(1) rotate(var(--r,0deg));opacity:1}}
+.ball::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%) rotate(calc(var(--r,0deg) * -1));
+  white-space:nowrap;background:rgba(60,45,35,.92);color:#fff;font:500 11px var(--fdisp);padding:3px 9px;border-radius:7px;
+  pointer-events:none;opacity:0;transition:opacity .08s;z-index:8}
+.ball:hover::after,.ball:active::after{opacity:1}
+.pile{gap:1px 0 !important}
+.more{font:600 12px var(--fdisp);color:var(--muted);align-self:center;margin-left:6px}
+.logwrap{display:flex;justify-content:center;margin:18px 0 10px}
+.logbtn{display:inline-flex;align-items:center;gap:7px;padding:6px 16px 6px 18px;border-radius:99px;border:1px solid var(--line);
+  background:#fff;color:var(--muted);font:600 12px var(--fdisp);letter-spacing:.1em}
+.logbtn span{font-weight:600;font-size:10.5px;letter-spacing:0;background:var(--accsoft);color:var(--acc);border-radius:99px;padding:0 7px}
+.logbtn.on{background:var(--accsoft);color:var(--brown);border-color:transparent}
+.loglist .row{opacity:.85}
+.noball{font-size:12px;color:var(--muted);padding:4px 0}
+.acts{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.acts button{font-size:12px;padding:5px 12px;border-radius:99px;border:1px solid var(--line);background:#fff;color:var(--brown)}
+.acts button:active{background:var(--line2)}
+.acts button[disabled]{opacity:.35}
+.hist{font-size:11px;color:var(--muted);margin-top:6px}
+
+/* ---------- 下タブ ---------- */
+.tabs{flex:0 0 auto;background:#ece7df;padding:0 0 env(safe-area-inset-bottom);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.tabs button{display:flex;align-items:center;justify-content:center;padding:7px 0 8px;border-radius:0;
+  color:#a39587;background:#ece7df;border-top:3px solid var(--ln);transition:background .15s,color .15s}
+.tabs button[data-tab=habit]{--c:#e8c98f;--ln:#dcb866}
+.tabs button[data-tab=once]{--c:#b8ced2;--ln:#86adb5}
+.tabs button[data-tab=word]{--c:#dfc3c6;--ln:#cea1a8}
+.tabs button[data-tab=set]{--c:#ddd6cf;--ln:#bfb2a2}
+.tabs button svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tabs button.on{background:var(--c);color:var(--brown)}
+
+/* ---------- 設定 ---------- */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 14px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 8px;font-size:12px;letter-spacing:.12em;color:var(--muted);font-weight:600}
+.f{margin-bottom:10px}
+.f label{display:block;font-size:11.5px;color:var(--muted);margin-bottom:3px}
+.f input[type=text],.f input[type=password],.f input[type=date],.f input[type=number],.f select,.f textarea{
+  width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;outline:none;font-size:14px}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--teal-d);box-shadow:0 0 0 3px #e3eef0}
+.btn{padding:9px 16px;border-radius:99px;background:var(--teal);color:var(--brown);font-weight:600;font-size:13px}
+.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--brown);font-weight:500}
+.btn.danger{background:#fff;border:1px solid #e8c4ba;color:var(--warn)}
+.btn.armed{background:var(--warn);color:#fff;border-color:var(--warn)}
+.btn:active{transform:scale(.97)}
+.brow{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.stat{font-size:12px;color:var(--muted);margin-top:9px;line-height:1.7;word-break:break-all}
+.stat.err{color:var(--warn)}
+.hint{font-size:11.5px;color:var(--muted);line-height:1.8;margin-top:6px}
+.chk{display:flex;align-items:center;gap:9px;font-size:13.5px}
+.chk input{width:18px;height:18px;accent-color:var(--teal-d)}
+
+/* ---------- 編集シート ---------- */
+.shwrap{position:fixed;inset:0;background:rgba(40,30,25,.38);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.shwrap.on{display:flex}
+.sheet{background:var(--panel);width:100%;max-width:560px;max-height:92dvh;overflow-y:auto;
+  border-radius:20px 20px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom));animation:up .22s ease-out}
+@keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+@media(min-width:700px){.shwrap{align-items:center}.sheet{border-radius:20px}}
+.sheet h2{margin:0 0 12px;font-size:15px;letter-spacing:.08em;color:var(--brown)}
+.sheet textarea{min-height:92px;resize:none;line-height:1.65}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dow{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
+.dow button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:13px;color:var(--muted)}
+.dow button.on{background:var(--teal-d);border-color:var(--teal-d);color:#fff;font-weight:600}
+.dowsun.on{background:#c98274}
+.qk{display:inline-block;font-size:11.5px;color:var(--teal-d);margin-left:8px;text-decoration:underline;cursor:pointer}
+.sbar{display:flex;gap:8px;justify-content:space-between;margin-top:14px}
+.sbar .l{display:flex;gap:8px}
+
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translateX(-50%);
+  background:rgba(60,45,35,.9);color:#fff;font-size:12px;padding:7px 16px;border-radius:99px;z-index:90;
+  opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.on{opacity:1}
+/* ---------- 下タブの上を歩く犬（One Step と同じ絵・同じ動き） ---------- */
+.dogstrip{position:fixed;left:0;right:0;bottom:var(--navh,44px);height:50px;z-index:20;pointer-events:none;overflow:visible}
+.dogstrip.off{display:none}
+.walker{position:absolute;left:0;width:39px;height:39px;pointer-events:none;will-change:transform}
+.walker svg{width:100%;height:100%;overflow:visible;display:block;transform:scaleX(var(--f,1));transform-origin:50% 50%}
+.walker:not(.pup) svg{transform:scaleX(var(--f,1)) scale(1.09);transform-origin:50% 76%}
+.pup{width:23px;height:23px;opacity:.94;animation:pupJoin .6s cubic-bezier(.2,1.4,.35,1)}
+.pup.p2{width:21px;height:21px}
+.pup.p3{width:18px;height:18px}
+@keyframes pupJoin{0%{opacity:0}100%{opacity:.92}}
+.dog-body{fill:url(#gDogB) #C9A87C}
+.dog-dark{fill:url(#gDogD) #A6845C}
+.dog-light{fill:url(#gDogL) #EBDCC4}
+.dog-nose{fill:#5C4632}
+.pup.coat-beige .dog-body{fill:url(#gPbB) #C6A97F}
+.pup.coat-beige .dog-dark{fill:url(#gPbD) #A98B5F}
+.pup.coat-beige .dog-light{fill:url(#gPbL) #E2D0B2}
+.pup.coat-black .dog-body{fill:url(#gPkB) #4C4239}
+.pup.coat-black .dog-dark{fill:url(#gPkD) #332C25}
+.pup.coat-black .dog-light{fill:url(#gPkL) #7A6E62}
+.pup.coat-brown .dog-body{fill:url(#gPrB) #8A6C4F}
+.pup.coat-brown .dog-dark{fill:url(#gPrD) #6E5339}
+.pup.coat-brown .dog-light{fill:url(#gPrL) #C7AC87}
+.walker .bob{animation:dogBob .52s ease-in-out infinite;transform-origin:17px 24px}
+.walker .leg-a,.walker .leg-b,.walker .gp-h1,.walker .gp-f1,.walker .gp-h2,.walker .gp-f2{transform-box:fill-box;transform-origin:50% 0}
+.walker .leg-a{animation:legA .52s ease-in-out infinite}
+.walker .leg-b{animation:legB .52s ease-in-out infinite}
+.walker .tail{animation:tailWag .42s ease-in-out infinite;transform-origin:8.6px 13.9px}
+.walker .ear{transform-origin:24.6px 8.8px}
+.walker .pose{transition:transform .35s ease}
+@keyframes dogBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.4px)}}
+@keyframes legA{0%,100%{transform:rotate(13deg)}50%{transform:rotate(-13deg)}}
+@keyframes legB{0%,100%{transform:rotate(-13deg)}50%{transform:rotate(13deg)}}
+@keyframes tailWag{0%,100%{transform:rotate(-11deg)}50%{transform:rotate(13deg)}}
+.walker.gt-walk .leg-a,.walker.gt-walk .leg-b{animation-duration:.88s}
+.walker.gt-walk .bob{animation-duration:.44s}
+.walker.gt-walk .tail{animation-duration:.74s}
+.walker.gt-run .leg-a,.walker.gt-run .leg-b{animation-duration:.28s}
+.walker.gt-run .bob{animation-duration:.14s}
+.walker.gt-run .tail{animation-duration:.25s}
+/* すわる */
+.walker.sit .bob,.walker.sit .leg-a,.walker.sit .leg-b{animation:none}
+.walker.sit .pose{transform-box:view-box;transform-origin:24px 26px;transform:rotate(-20deg)}
+.walker.sit .lg-h1,.walker.sit .lg-h2{transform-box:fill-box;transform-origin:50% 0;transform:translateY(2px) rotate(-72deg)}
+.walker.sit .lg-h2{fill:#A6845C}
+.walker.sit .tail{animation-duration:.75s}
+.pup.coat-beige.sit .lg-h2{fill:#A98B5F}.pup.coat-black.sit .lg-h2{fill:#332C25}.pup.coat-brown.sit .lg-h2{fill:#6E5339}
+/* ふせ */
+.walker.lie .bob,.walker.lie .leg-a,.walker.lie .leg-b{animation:none}
+.walker.lie .pose{transform-box:view-box;transform:translateY(6.5px)}
+.walker.lie .leg-a,.walker.lie .leg-b{transform-box:fill-box;transform-origin:50% 0;transform:scaleY(.34)}
+.walker.lie .tail{animation-duration:1.2s}
+/* ねる */
+.walker.sleep .bob,.walker.sleep .leg-a,.walker.sleep .leg-b{animation:none}
+.walker.sleep .pose{transform-box:view-box;transform:translateY(6.5px)}
+.walker.sleep .leg-a,.walker.sleep .leg-b{transform-box:fill-box;transform-origin:50% 0;transform:scaleY(.34)}
+.walker.sleep .tail{animation:none}
+.walker.sleep .dog-collar circle{transform-box:view-box;transform:translate(0,3.4px)}
+.walker.sleep .ear,.walker.sleep .bob>.dog-shut,
+.walker.sleep circle.dog-body,
+.walker.sleep .bob>g[clip-path="url(#dgHead)"],
+.walker.sleep .dog-front,
+.walker.sleep ellipse.dog-light[cx="27.2"],
+.walker.sleep ellipse.dog-light[cx="29.75"],
+.walker.sleep ellipse.dog-nose{transform-box:view-box;transform:translate(0,3.4px)}
+.walker.sleep.zz2 .ear{transform:translate(0,3.4px) rotate(-17deg);transform-origin:24.6px 8.8px}
+.walker.sleep.zz2 ellipse.dog-light[cx="29.75"]{transform:translate(.3px,3.95px)}
+.walker.sleep.zz2 ellipse.dog-nose{transform:translate(.35px,4px)}
+.walker.sleep.zz2 .bob>.dog-shut{transform:translate(0,3.85px)}
+.dog-front{display:none}
+.walker.sleep.zz3 .dog-front{display:block}
+.walker.sleep.zz3 .dogf-face{transform-box:view-box;transform:rotate(21deg);transform-origin:26px 12.5px}
+.walker.sleep.zz3 .bob>.dog-shut,.walker.sleep.zz3 path.dog-light,
+.walker.sleep.zz3 ellipse.dog-light[cx="27.2"],.walker.sleep.zz3 ellipse.dog-light[cx="29.75"],
+.walker.sleep.zz3 ellipse.dog-nose[cx="31.25"]{display:none}
+.walker.sleep.zz3 .ear{transform:translate(-1.25px,3.4px) rotate(21deg);transform-origin:26px 7px}
+.walker.sleep.zz3 .dogf-ear{transform-box:view-box;transform:translate(1.25px,0) rotate(21deg);transform-origin:26px 7px}
+.dog-shut{display:none;fill:none;stroke:#5C4632;stroke-width:.85;stroke-linecap:round}
+.walker.sleep .dog-eye,.walker.sleep .dog-glint{display:none}
+.walker.sleep .dog-shut{display:block}
+.zzz{position:absolute;z-index:6;display:flex;align-items:flex-end;gap:2px;pointer-events:none;
+  font-family:'Montserrat',sans-serif;font-weight:600;color:#a99274;transition:opacity .45s ease;opacity:0}
+.zzz.on{opacity:1}
+.zzz i{font-style:normal;animation:zzzUp 2.6s ease-in-out infinite}
+.zzz i:nth-child(1){font-size:9px}
+.zzz i:nth-child(2){font-size:11px;animation-delay:.55s}
+.zzz i:nth-child(3){font-size:13px;animation-delay:1.1s}
+@keyframes zzzUp{0%{opacity:0;transform:translate(0,4px)}30%{opacity:.9}100%{opacity:0;transform:translate(5px,-11px)}}
+@media(prefers-reduced-motion:reduce){.walker .bob,.walker .leg-a,.walker .leg-b,.walker .tail{animation:none!important}.zzz i{animation:none;opacity:.75}}
+
+.walker.gt-walk svg,.walker.gt-run svg{translate:0 2px}
+.walker.pup.gt-walk svg,.walker.pup.gt-run svg{translate:0 1.2px}
+.rollball{position:absolute;left:0;bottom:-4.2px;width:26px;height:28.4px;pointer-events:none;will-change:transform}
+.rollball svg{width:100%;height:100%;display:block;transform-origin:50% 51.4%;overflow:visible}
+.ttlic{display:inline-flex;width:20px;height:20px;color:var(--brown)}
+.ttlic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.cnt{display:inline-flex;align-items:center;gap:3px}
+.cnt .cb{display:inline-block;width:15px;height:16.5px;line-height:0}
+.cnt .cb svg{width:100%;height:100%}
+
+/* ---------- 花火（One Step と同じ） ---------- */
+.fwlayer{position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden}
+.fw{position:absolute;width:0;height:0;pointer-events:none;transform:scale(var(--fs,1.3))}
+.fw-rise{position:absolute;left:-.75px;width:1.5px;height:20px;margin-top:-20px;border-radius:1px;transform-origin:50% 100%;
+  background:linear-gradient(to top,rgba(238,214,164,0),#F2DCA8);box-shadow:0 0 4px rgba(240,208,138,.6);
+  animation:fwRise .85s cubic-bezier(.22,.58,.48,1) forwards}
+@keyframes fwRise{0%{transform:translate(var(--rx),var(--rise)) scaleY(.35);opacity:0}18%{opacity:.85}78%{opacity:.8}100%{transform:translate(0,0) scaleY(1.05);opacity:0}}
+.fw-core{position:absolute;left:-2px;top:-2px;width:4px;height:4px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor;
+  opacity:0;animation:fwCore .7s ease-out .85s forwards}
+@keyframes fwCore{0%{opacity:0;transform:scale(.3)}20%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(.4)}}
+.fw-ray{position:absolute;left:-.75px;width:1.5px;height:var(--len);margin-top:calc(-1 * var(--len));border-radius:1px;
+  background:currentColor;transform-origin:50% 100%;opacity:0;animation:fwRay 1.5s cubic-bezier(.12,.75,.3,1) .85s forwards}
+.fw-ray::after{content:"";position:absolute;left:-.5px;top:-1.2px;width:2.5px;height:2.5px;border-radius:50%;background:currentColor;box-shadow:0 0 3px currentColor}
+@keyframes fwRay{0%{transform:rotate(var(--a)) scaleY(0);opacity:0}14%{opacity:.78}55%{transform:rotate(var(--a)) scaleY(1);opacity:.72}100%{transform:rotate(var(--a)) scaleY(1.1) translateY(4px);opacity:0}}
+.confetti{position:absolute;opacity:0;transform:translate(-50%,-50%);animation:confettiFly var(--dur,2s) cubic-bezier(.12,.72,.3,1) forwards}
+@keyframes confettiFly{0%{opacity:0;transform:translate(-50%,-50%) scale(.3) rotate(0deg)}12%{opacity:1}70%{opacity:1}
+  100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.85) rotate(var(--rot,360deg))}}
+@media(prefers-reduced-motion:reduce){.fwlayer{display:none}}
+</style>
+</head>
+<body>
+
+<div class="top col" id="top">
+  <div class="ttl"><span class="ttlic" id="ttlIc"></span><span id="ttl">Habits</span><span class="dot" id="sdot" title="同期"></span></div>
+  <button class="addbtn" id="addBtn" aria-label="追加">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+</div>
+
+<div class="scroll" id="scroll"><div class="col" id="view"></div></div>
+
+<svg width="0" height="0" style="position:absolute;pointer-events:none" aria-hidden="true"><defs>
+<clipPath id="dgHead"><circle cx="26" cy="12.5" r="5.4"/></clipPath>
+<clipPath id="dgNeck"><rect x="6.5" y="12" width="18" height="9" rx="4.5"/></clipPath>
+<radialGradient id="gDogB" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#D4B996"/><stop offset=".52" stop-color="#C9A87C"/><stop offset="1" stop-color="#AF926C"/></radialGradient>
+<radialGradient id="gDogD" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#B89D7D"/><stop offset=".52" stop-color="#A6845C"/><stop offset="1" stop-color="#907350"/></radialGradient>
+<radialGradient id="gDogL" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#EFE3D0"/><stop offset=".52" stop-color="#EBDCC4"/><stop offset="1" stop-color="#CCBFAB"/></radialGradient>
+<radialGradient id="gPbB" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#D1BA99"/><stop offset=".52" stop-color="#C6A97F"/><stop offset="1" stop-color="#AC936E"/></radialGradient>
+<radialGradient id="gPbD" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#BAA27F"/><stop offset=".52" stop-color="#A98B5F"/><stop offset="1" stop-color="#937953"/></radialGradient>
+<radialGradient id="gPbL" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#E8D9C1"/><stop offset=".52" stop-color="#E2D0B2"/><stop offset="1" stop-color="#C5B59B"/></radialGradient>
+<radialGradient id="gPkB" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#706861"/><stop offset=".52" stop-color="#4C4239"/><stop offset="1" stop-color="#423932"/></radialGradient>
+<radialGradient id="gPkD" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#5C5651"/><stop offset=".52" stop-color="#332C25"/><stop offset="1" stop-color="#2C2620"/></radialGradient>
+<radialGradient id="gPkL" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#958B81"/><stop offset=".52" stop-color="#7A6E62"/><stop offset="1" stop-color="#6A6055"/></radialGradient>
+<radialGradient id="gPrB" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#A18972"/><stop offset=".52" stop-color="#8A6C4F"/><stop offset="1" stop-color="#785E45"/></radialGradient>
+<radialGradient id="gPrD" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#8B7561"/><stop offset=".52" stop-color="#6E5339"/><stop offset="1" stop-color="#604832"/></radialGradient>
+<radialGradient id="gPrL" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#D2BD9F"/><stop offset=".52" stop-color="#C7AC87"/><stop offset="1" stop-color="#AD9675"/></radialGradient>
+</defs></svg>
+<div class="dogstrip" id="dogStrip"></div>
+<nav class="tabs" id="tabs">
+  <button data-tab="habit" aria-label="Habits"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8"/><path d="M20 4v4h-4"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 16"/><path d="M4 20v-4h4"/></svg></button>
+  <button data-tab="once" aria-label="One-offs"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg></button>
+  <button data-tab="word" aria-label="Words"><svg viewBox="0 0 24 24"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></button>
+  <button data-tab="set" aria-label="Settings"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg></button>
+</nav>
+
+<div class="shwrap" id="shwrap"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+<div class="fwlayer" id="fwLayer"></div>
+
+<script>
+'use strict';
+/* =====================================================
+   Habits — 習慣 / 単発 / 言葉 / 設定
+   データはこの端末のブラウザ（localStorage）に保存し、
+   GitHub の非公開 Gist を通して Notes と同じ方式で同期します。
+   ===================================================== */
+const BALL_ART = `<svg viewBox="0 0 64 70" aria-hidden="true"><defs><radialGradient id="tbg" cx="33%" cy="26%" r="76%"><stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".4" stop-color="#fff" stop-opacity=".10"/><stop offset=".76" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#8C7457" stop-opacity=".2"/></radialGradient></defs><path d="M15.4 6.4 25.6 13.6 18 22.6Z" fill="#C9A87C"/><path d="M48.6 6.4 38.4 13.6 46 22.6Z" fill="#C9A87C"/><path d="M17.4 10 23.2 14.1 19.2 19.2Z" fill="#E4D2B4"/><path d="M46.6 10 40.8 14.1 44.8 19.2Z" fill="#E4D2B4"/><ellipse cx="32" cy="36" rx="28.5" ry="27.5" fill="#EDE6D6"/><path d="M32 8.5c-15.7 0-28.5 12.3-28.5 27.5 0 1.6.1 3.2.4 4.7 6.4 2.6 12.6 3.4 18.5 2.5 4.2-.7 7.4-2.8 9.6-6.3 2.2 3.5 5.4 5.6 9.6 6.3 5.9.9 12.1.1 18.5-2.5.3-1.5.4-3.1.4-4.7C60.5 20.8 47.7 8.5 32 8.5z" fill="#C9A87C"/><ellipse cx="21.6" cy="21.6" rx="4.6" ry="2.9" fill="#EDE6D6"/><ellipse cx="42.4" cy="21.6" rx="4.6" ry="2.9" fill="#EDE6D6"/><ellipse cx="20.4" cy="33.4" rx="3.5" ry="4" fill="#372C22"/><ellipse cx="43.6" cy="33.4" rx="3.5" ry="4" fill="#372C22"/><ellipse cx="22" cy="31.6" rx="1.1" ry="1.3" fill="#fff" opacity=".85"/><ellipse cx="45.2" cy="31.6" rx="1.1" ry="1.3" fill="#fff" opacity=".85"/><ellipse cx="32" cy="39.4" rx="9.6" ry="8.6" fill="#F5F0E4"/><ellipse cx="32" cy="35" rx="4.2" ry="3.3" fill="#372C22"/><path d="M32 38.4v2.2" stroke="#372C22" stroke-width="1.2" stroke-linecap="round" fill="none"/><path d="M32 40.6c-1 2.4-4.6 2.4-5.6 0M32 40.6c1 2.4 4.6 2.4 5.6 0" stroke="#372C22" stroke-width="1.2" stroke-linecap="round" fill="none"/><ellipse cx="32" cy="36" rx="28.5" ry="27.5" fill="url(#tbg)"/><ellipse cx="9.6" cy="29.5" rx="2.4" ry="4.9" fill="#fff" opacity=".44" transform="rotate(20 9.6 29.5)"/></svg>`;
+const BALL_COATS = [
+  {coat:'#C9A87C', earIn:'#E4D2B4', face:'#EDE6D6', muz:'#F5F0E4'},
+  {coat:'#E0C8A2', earIn:'#F0E3CB', face:'#F6F0E2', muz:'#FBF7EC'},
+  {coat:'#A97F55', earIn:'#D6BE9C', face:'#E8DECA', muz:'#F2EADA'}
+];
+/* 5個目ごとのボールは、そのタブの色 */
+const TAB_BALL = {habit:['#dcb866', '#f1dfae'], once:['#86adb5', '#cfe1e4'], word:['#cea1a8', '#ecd5d8'], set:['#bfb2a2', '#e4ddd4']};
+const tabBall = tab => { const c = TAB_BALL[tab] || TAB_BALL.habit; return BALL_ART.split('#C9A87C').join(c[0]).split('#E4D2B4').join(c[1]); };
+const COAT_SVG = BALL_COATS.map((c, i) => i === 0 ? BALL_ART :
+  BALL_ART.split('#C9A87C').join(c.coat).split('#E4D2B4').join(c.earIn)
+          .split('#EDE6D6').join(c.face).split('#F5F0E4').join(c.muz));
+/* 上半分（毛と耳）はその子（タスク）の最初のボールの色で揃え、
+   顔まわりの色だけボールごとに少し変える */
+function ballSvg(base, i){
+  const u = BALL_COATS[base % BALL_COATS.length], f = BALL_COATS[i % BALL_COATS.length];
+  return BALL_ART.split('#C9A87C').join(u.coat).split('#E4D2B4').join(u.earIn)
+                 .split('#EDE6D6').join(f.face).split('#F5F0E4').join(f.muz);
+}
+const baseOf = id => { let h = 0; for(let k = 0; k < id.length; k++) h = (h * 31 + id.charCodeAt(k)) >>> 0; return h % BALL_COATS.length; };
+const BALL_CAP = 300;   // 画面に並べる最大数（それ以上は「＋N」）
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const WD = '日月火水木金土';
+
+/* ---------------- 日付 ---------------- */
+const pad = n => String(n).padStart(2, '0');
+const ymd = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+/* 1日の区切りは朝5時。0:00〜4:59 はまだ前の日として扱う */
+const DAY_START_H = 5;
+const today = () => ymd(new Date(Date.now() - DAY_START_H * 3600000));
+function dayOf(stamp){
+  const s = String(stamp || ''), m = s.match(/^(\d{4})-(\d\d)-(\d\d)(?: (\d\d):(\d\d))?/);
+  if(!m) return '';
+  if(m[4] === undefined) return s.slice(0, 10);
+  const d = new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5]);
+  return ymd(new Date(d.getTime() - DAY_START_H * 3600000));
+}
+const parseD = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+const addDays = (s, n) => { const d = parseD(s); d.setDate(d.getDate() + n); return ymd(d); };
+function addMonths(s, n){
+  const d = parseD(s), day = d.getDate();
+  d.setDate(1); d.setMonth(d.getMonth() + n);
+  const last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  d.setDate(Math.min(day, last));
+  return ymd(d);
+}
+function nextDate(s, r){
+  const n = Math.max(1, parseInt(r.n, 10) || 1);
+  switch(r.unit){
+    case 'day': return addDays(s, n);
+    case 'weekday': { let x = addDays(s, 1); while([0, 6].includes(parseD(x).getDay())) x = addDays(x, 1); return x; }
+    case 'week': {
+      const days = (r.days && r.days.length) ? [...r.days].sort((a, b) => a - b) : [parseD(s).getDay()];
+      const dow = parseD(s).getDay();
+      const later = days.find(d => d > dow);
+      if(later !== undefined) return addDays(s, later - dow);
+      return addDays(s, 7 * n - dow + days[0]);
+    }
+    case 'month': return addMonths(s, n);
+    case 'year': return addMonths(s, 12 * n);
+  }
+  return s;
+}
+function repLabel(r){
+  if(!r || !r.unit) return '';
+  const n = Math.max(1, parseInt(r.n, 10) || 1);
+  switch(r.unit){
+    case 'day': return n === 1 ? '毎日' : n + '日ごと';
+    case 'weekday': return '平日';
+    case 'week': return (n === 1 ? '毎週' : n + '週ごと') + ((r.days && r.days.length) ? ' ' + [...r.days].sort((a, b) => a - b).map(d => WD[d]).join('・') : '');
+    case 'month': return n === 1 ? '毎月' : n + 'か月ごと';
+    case 'year': return n === 1 ? '毎年' : n + '年ごと';
+  }
+  return '';
+}
+function dateLabel(s){
+  const d = parseD(s), t = parseD(today());
+  const base = (d.getFullYear() !== t.getFullYear() ? d.getFullYear() + '/' : '') + (d.getMonth() + 1) + '/' + d.getDate() + '(' + WD[d.getDay()] + ')';
+  const diff = Math.round((d - t) / 86400000);
+  return diff === 0 ? '今日 ' + base : diff === 1 ? '明日 ' + base : base;
+}
+
+/* ---------------- データ ---------------- */
+const DK = 'habits.data.v1', SK = 'habits.sync.v1', PK = 'habits.prefs.v1';
+let items = [];
+let prefs = {tab:'habit', hideDone:false, sound:true, dog:true};
+let sync = {token:'', gist:'', pass:'', last:0};
+function lsGet(k){ try{ return JSON.parse(localStorage.getItem(k) || 'null'); }catch(e){ return null; } }
+function lsSet(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function load(){
+  const d = lsGet(DK); items = (d && Array.isArray(d.items)) ? d.items : [];
+  prefs = {...prefs, ...(lsGet(PK) || {})};
+  sync = {...sync, ...(lsGet(SK) || {})};
+}
+let syncTimer = null;
+function save(){
+  lsSet(DK, {items});
+  scheduleSync();
+}
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'i' + Date.now().toString(36) + Math.random().toString(36).slice(2, 9));
+const live = tab => items.filter(i => i.tab === tab && !i.del).sort((a, b) => a.order - b.order);
+function nextOrder(tab){ return items.filter(i => i.tab === tab).reduce((m, i) => Math.max(m, i.order), 0) + 1; }
+const byId = id => items.find(i => i.id === id);
+const touch = it => { it.upd = Date.now(); };
+
+/* ---------------- 描画 ---------------- */
+let expanded = new Set();
+let showLog = false;
+let popId = null;
+const TITLES = {habit:'Habits', once:'One-offs', word:'Words', set:'Settings'};
+const GRIP = '<svg viewBox="0 0 14 20" fill="currentColor"><circle cx="4" cy="4" r="1.6"/><circle cx="10" cy="4" r="1.6"/><circle cx="4" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="4" cy="16" r="1.6"/><circle cx="10" cy="16" r="1.6"/></svg>';
+const BOOKMARK = '<svg class="bm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5h10a1 1 0 0 1 1 1V20l-6-4.2L6 20V4.5a1 1 0 0 1 1-1z"/></svg>';
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
+
+function render(){
+  const tab = prefs.tab;
+  $('ttl').textContent = TITLES[tab];
+  { const b = document.querySelector(`#tabs button[data-tab="${tab}"] svg`); $('ttlIc').innerHTML = b ? b.outerHTML : ''; }
+  document.body.dataset.tab = tab;
+  const tcm = document.querySelector('meta[name=theme-color]'); if(tcm) tcm.content = '#f7f4ef';
+  $('addBtn').style.visibility = tab === 'set' ? 'hidden' : 'visible';
+  document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+  if(tab === 'set'){ renderSettings(); return; }
+  let list = live(tab), logList = [];
+  if(tab === 'once' && prefs.hideDone){ logList = list.filter(isFinished); list = list.filter(i => !isFinished(i)); }
+  const logHTML = logList.length ? `<div class="logwrap"><button class="logbtn${showLog ? ' on' : ''}" id="logBtn">Log<span>${logList.length}</span></button></div>`
+    + (showLog ? `<div class="loglist">${logList.map(rowHTML).join('')}</div>` : '') : '';
+  if(!list.length && logList.length){
+    $('view').innerHTML = `<div class="empty" style="padding:30px 20px 18px">完了していないタスクはありません。</div>` + logHTML;
+    bindLog(); popId = null; return;
+  }
+  if(!list.length){
+    const msg = {habit:'習慣はまだありません。<br>右上の ＋ から追加してください。',
+      once:'単発のタスクはまだありません。<br>右上の ＋ から追加してください。',
+      word:'言葉はまだありません。<br>右上の ＋ から追加してください。'}[tab];
+    $('view').innerHTML = `<div class="empty"><div class="eball">${COAT_SVG[0]}</div>${msg}</div>`;
+    return;
+  }
+  $('view').innerHTML = list.map(rowHTML).join('') + logHTML;
+  bindLog();
+  popId = null;
+}
+function bindLog(){
+  const b = $('logBtn');
+  if(b) b.onclick = () => { showLog = !showLog; render(); if(showLog) setTimeout(() => b && $('logBtn') && $('logBtn').scrollIntoView({behavior:'smooth', block:'start'}), 30); };
+}
+/* 出典と作者。英語なら「— Author, Source（斜体）」、日本語の出典は『』で */
+function citeHTML(it){
+  const a = (it.author || '').trim(), s = (it.source || '').trim();
+  if(!a && !s) return '';
+  const jp = /[^\x00-\u024f]/.test(s);
+  const src = !s ? '' : jp ? esc(/^[『「《]/.test(s) ? s : '『' + s + '』') : '<i>' + esc(s) + '</i>';
+  return `<div class="cite">— ${esc(a)}${a && s ? (jp ? '' : ', ') : ''}${src}</div>`;
+}
+function isFinished(it){ return it.tab === 'once' && !(it.repeat && it.repeat.unit) && it.done.length > 0; }
+function rowHTML(it){
+  const open = expanded.has(it.id);
+  const t = today();
+  const cnt = it.done.length;
+  const word = it.tab === 'word';
+  const cite = word ? citeHTML(it) : '';
+  const fin = isFinished(it);
+  let chips = '';
+  if(!word){
+    if(it.date){
+      const cls = fin ? '' : it.date < t ? ' over' : it.date === t ? ' today' : '';
+      chips += `<span class="chip${cls}">${esc(dateLabel(it.date))}</span>`;
+    }
+    if(it.repeat && it.repeat.unit) chips += `<span class="chip rep">↻ ${esc(repLabel(it.repeat))}</span>`;
+  }
+  const doneToday = it.done.length && dayOf(it.done[it.done.length - 1]) === t;
+  const right = `<div class="right">
+      ${cnt ? `<span class="cnt"><i class="cb">${COAT_SVG[0]}</i>×${cnt}</span>` : ''}
+      <button class="dn${(doneToday || fin) ? ' on' : ''}" data-act="done" aria-label="Done">${word ? BOOKMARK : CHECK}</button>
+    </div>`;
+  return `<div class="row ${it.tab}${fin ? ' finished' : ''}" data-id="${it.id}">
+    <div class="rtop" data-act="toggle">
+      <div class="grip" data-act="grip">${GRIP}</div>
+      <div class="main"><div class="txt">${esc(it.text)}</div>${chips ? `<div class="meta">${chips}</div>` : ''}</div>
+      ${right}
+    </div>${cite}${open ? extHTML(it) : ''}</div>`;
+}
+function tipText(s){
+  s = String(s); const d = s.slice(0, 10), tm = s.slice(11, 16);
+  if(!/^\d{4}-\d\d-\d\d$/.test(d)) return s;
+  const x = parseD(d);
+  return x.getFullYear() + '/' + (x.getMonth() + 1) + '/' + x.getDate() + '(' + WD[x.getDay()] + ')' + (tm ? ' ' + tm : '');
+}
+function extHTML(it){
+  const word = it.tab === 'word';
+  let body = '';
+  {
+    const n = it.done.length;
+    if(!n){
+      body = '<div class="noball">まだ 0 回です。押すと、ここにボールが並びます。</div>';
+    }else{
+      const shown = Math.min(n, BALL_CAP);
+      let h = '';
+      for(let i = 0; i < shown; i++){
+        const r = ((i * 37 + 11) % 21) - 10;
+        const pop = (popId === it.id && i === shown - 1 && n <= BALL_CAP) ? ' pop' : '';
+        const gl = (i % 5 === 4) ? ' gl' : '';
+        h += `<span class="ball${pop}${gl}" style="--r:${r}deg;--gd:${(i % 7) * .3}s" data-tip="${esc(tipText(it.done[i]))}">${gl ? tabBall(it.tab) : COAT_SVG[i % COAT_SVG.length]}</span>`;
+      }
+      if(n > shown) h += `<span class="more">＋${n - shown}</span>`;
+      body = `<div class="pile">${h}</div>
+        <div class="hist">最初 ${esc(tipText(it.done[0]))}　最新 ${esc(tipText(it.done[n - 1]))}</div>`;
+    }
+  }
+  return `<div class="ext">${body}
+    <div class="acts">
+      <button data-act="edit">編集</button>
+      <button data-act="undo"${it.done.length ? '' : ' disabled'}>1回戻す</button>
+    </div></div>`;
+}
+
+/* ---------------- 操作 ---------------- */
+function doDone(it){
+  const t = today();
+  if(isFinished(it)){ it.done.pop(); touch(it); save(); return; }
+  const first = dayOf(it.done[it.done.length - 1]) !== t;
+  { const n = new Date(); it.done.push(ymd(n) + ' ' + pad(n.getHours()) + ':' + pad(n.getMinutes())); }   // 記録は実際の日時
+  if(first && it.date && it.repeat && it.repeat.unit){
+    let nx = nextDate(it.date, it.repeat), g = 0;
+    while(nx <= t && g++ < 800) nx = nextDate(nx, it.repeat);
+    it.date = nx;
+  }
+  touch(it); popId = it.id; save();
+}
+function moveBy(it, dir){
+  const list = live(it.tab), i = list.findIndex(x => x.id === it.id), j = i + dir;
+  if(j < 0 || j >= list.length) return;
+  const other = list[j];
+  const a = it.order; it.order = other.order; other.order = a;
+  if(it.order === other.order) it.order += dir * 0.001;
+  touch(it); touch(other); save();
+}
+document.getElementById('view').addEventListener('click', e => {
+  const a = e.target.closest('[data-act]');
+  if(!a) return;
+  const row = e.target.closest('.row');
+  if(!row) return;
+  const it = byId(row.dataset.id);
+  if(!it) return;
+  const act = a.dataset.act;
+  if(act === 'grip') return;
+  if(act === 'done'){ e.stopPropagation(); const was = it.done.length; doDone(it); if(it.done.length > was){ fanfare(it.done.length % 5 === 0); fireworks(it.done.length); } render(); const nb = document.querySelector(`.row[data-id="${it.id}"] .dn`); if(nb) nb.classList.add('burst'); return; }
+  if(act === 'toggle'){
+    if(expanded.has(it.id)) expanded.delete(it.id); else expanded.add(it.id);
+    render(); return;
+  }
+  if(act === 'edit'){ openSheet(it); return; }
+  if(act === 'undo'){ it.done.pop(); touch(it); save(); render(); return; }
+});
+
+/* ---------- ドラッグで並べ替え（左の ⋮⋮ をつかむ） ---------- */
+(function(){
+  const view = $('view'), scroller = $('scroll');
+  let el = null, startY = 0, lastY = 0, timer = null, pid = null;
+  /* 行のどこでもドラッグできる：マウスは少し動かすと、タッチは長押しで掴む。
+     左の ⋮⋮ はすぐ掴める。 */
+  let pend = null, dragging = false, lpTimer = null, swallow = false;
+  view.addEventListener('click', e => { if(swallow){ e.stopPropagation(); e.preventDefault(); } }, true);
+  const blocked = t => t.closest('button, a, input, textarea, select, .ext');
+  function begin(row, e){
+    el = row; dragging = true; pid = e.pointerId;
+    try{ row.setPointerCapture(pid); }catch(_){}
+    startY = lastY = e.clientY;
+    row.classList.add('drag');
+    if(navigator.vibrate) try{ navigator.vibrate(12); }catch(_){}
+    timer = setInterval(tick, 16);
+  }
+  view.addEventListener('pointerdown', e => {
+    if(e.button > 0 || dragging) return;
+    const row = e.target.closest('.row'); if(!row) return;
+    const g = e.target.closest('.grip');
+    if(g){ e.preventDefault(); begin(row, e); return; }
+    if(blocked(e.target)) return;
+    pend = {row, x:e.clientX, y:e.clientY, id:e.pointerId, touch:e.pointerType !== 'mouse'};
+    if(pend.touch){
+      lpTimer = setTimeout(() => { if(pend){ const p = pend; pend = null; begin(p.row, {pointerId:p.id, clientY:lastY || p.y}); } }, 380);
+    }
+  });
+  function cancelPend(){ clearTimeout(lpTimer); pend = null; }
+  document.addEventListener('touchmove', e => { if(dragging) e.preventDefault(); }, {passive:false});
+  view.addEventListener('contextmenu', e => { if(dragging || pend) e.preventDefault(); });
+  function tick(){
+    if(!el) return;
+    const sr = scroller.getBoundingClientRect();
+    let d = 0;
+    if(lastY < sr.top + 56) d = -Math.min(14, (sr.top + 56 - lastY) / 4);
+    else if(lastY > sr.bottom - 56) d = Math.min(14, (lastY - (sr.bottom - 56)) / 4);
+    if(d){
+      const before = scroller.scrollTop;
+      scroller.scrollTop += d;
+      startY -= (scroller.scrollTop - before);
+    }
+    follow();
+  }
+  function follow(){
+    el.style.transform = `translateY(${lastY - startY}px)`;
+    const r = el.getBoundingClientRect(), cy = r.top + r.height / 2;
+    const sibs = [...view.querySelectorAll('.row')].filter(x => x !== el);
+    for(const s of sibs){
+      const sr = s.getBoundingClientRect();
+      if(cy > sr.top && cy < sr.bottom){
+        const after = !!(el.compareDocumentPosition(s) & Node.DOCUMENT_POSITION_FOLLOWING);
+        const mid = sr.top + sr.height / 2;
+        if((after && cy > mid) || (!after && cy < mid)){
+          const visualTop = r.top;
+          if(after) s.after(el); else s.before(el);
+          el.style.transform = '';
+          const nb = el.getBoundingClientRect().top;
+          startY = lastY - (visualTop - nb);
+          el.style.transform = `translateY(${lastY - startY}px)`;
+        }
+        break;
+      }
+    }
+  }
+  view.addEventListener('pointermove', e => {
+    lastY = e.clientY;
+    if(pend && e.pointerId === pend.id){
+      const dx = Math.abs(e.clientX - pend.x), dy = Math.abs(e.clientY - pend.y);
+      if(pend.touch){ if(dx > 9 || dy > 9) cancelPend(); }
+      else if(dy > 5){ const p = pend; cancelPend(); begin(p.row, {pointerId:p.id, clientY:p.y}); }
+      return;
+    }
+    if(el && e.pointerId === pid){ e.preventDefault(); }
+  });
+  function end(e){
+    cancelPend();
+    if(!el || (e && e.pointerId !== pid)) return;
+    clearInterval(timer); dragging = false; swallow = true; setTimeout(() => { swallow = false; }, 0);
+    const rows = [...view.querySelectorAll('.row')];
+    const idx = rows.indexOf(el);
+    const it = byId(el.dataset.id);
+    el.classList.remove('drag'); el.style.transform = '';
+    el = null;
+    if(!it) { render(); return; }
+    const prev = rows[idx - 1] && byId(rows[idx - 1].dataset.id);
+    const next = rows[idx + 1] && byId(rows[idx + 1].dataset.id);
+    let o;
+    if(prev && next) o = (prev.order + next.order) / 2;
+    else if(prev) o = prev.order + 1;
+    else if(next) o = next.order - 1;
+    else o = it.order;
+    if(o !== it.order){ it.order = o; touch(it); save(); }
+    render();
+  }
+  view.addEventListener('pointerup', end);
+  view.addEventListener('pointercancel', end);
+})();
+
+/* ---------------- 追加・編集シート ---------------- */
+let edit = null;
+const UNITS = [['', 'なし'], ['day', '日ごと'], ['weekday', '平日'], ['week', '週ごと'], ['month', 'か月ごと'], ['year', '年ごと']];
+$('addBtn').addEventListener('click', () => openSheet(null));
+function openSheet(it){
+  const tab = prefs.tab;
+  const isNew = !it;
+  edit = isNew ? {
+    id: uid(), tab, text:'', date: tab === 'habit' ? today() : '',
+    repeat: tab === 'habit' ? {unit:'day', n:1, days:[]} : {unit:'', n:1, days:[]},
+    done:[], order: nextOrder(tab), upd: 0, del:false, _new:true
+  } : JSON.parse(JSON.stringify(it));
+  edit.repeat ||= {unit:'', n:1, days:[]};
+  edit.repeat.days ||= [];
+  drawSheet();
+  $('shwrap').classList.add('on');
+  setTimeout(() => { const t = $('eText'); if(t){ grow(t); if(isNew) t.focus(); } }, 60);
+}
+function drawSheet(){
+  const e = edit, word = e.tab === 'word', r = e.repeat;
+  const kind = {habit:'習慣', once:'単発', word:'言葉'}[e.tab];
+  $('sheet').innerHTML = `<h2>${e._new ? kind + 'を追加' : kind + 'を編集'}</h2>
+    <div class="f"><label>${word ? '言葉' : '内容'}</label>
+      <textarea id="eText"${word ? ' class="serif"' : ''} placeholder="${word ? '残しておきたい言葉' : 'やること'}">${esc(e.text)}</textarea></div>
+    ${word ? `
+    <div class="two">
+      <div class="f"><label>Author</label><input type="text" id="eAuth" value="${esc(e.author || '')}" placeholder="e.g. Seneca" autocapitalize="words"></div>
+      <div class="f"><label>Source</label><input type="text" id="eSrc" value="${esc(e.source || '')}" placeholder="e.g. Letters from a Stoic" autocapitalize="words"></div>
+    </div>` : `
+    <div class="f"><label>日付<span class="qk" data-q="today">今日</span><span class="qk" data-q="tomorrow">明日</span><span class="qk" data-q="clear">なし</span></label>
+      <input type="date" id="eDate" value="${esc(e.date)}"></div>
+    <div class="two">
+      <div class="f"><label>くり返し</label>
+        <select id="eUnit">${UNITS.map(([v, l]) => `<option value="${v}"${r.unit === v ? ' selected' : ''}>${l}</option>`).join('')}</select></div>
+      <div class="f" id="eNwrap"${(r.unit && r.unit !== 'weekday') ? '' : ' style="display:none"'}><label>間隔（N）</label>
+        <input type="number" id="eN" min="1" max="99" value="${r.n || 1}"></div>
+    </div>
+    <div class="f" id="eDays"${r.unit === 'week' ? '' : ' style="display:none"'}><label>曜日</label>
+      <div class="dow">${[1, 2, 3, 4, 5, 6, 0].map(d => `<button type="button" data-d="${d}" class="${r.days.includes(d) ? 'on' : ''}${d === 0 ? ' dowsun' : ''}">${WD[d]}</button>`).join('')}</div></div>
+    <div class="hint" id="eHint"></div>`}
+    <div class="sbar">
+      <div class="l">${e._new ? '' : '<button class="btn danger" id="eDel">削除</button>'}</div>
+      <div class="l"><button class="btn ghost" id="eCancel">キャンセル</button><button class="btn" id="eSave">保存</button></div>
+    </div>`;
+  const ta = $('eText'); ta.addEventListener('input', () => grow(ta));
+  $('eCancel').onclick = closeSheet;
+  $('eSave').onclick = saveSheet;
+  if($('eDel')) $('eDel').onclick = ev => {
+    const b = ev.currentTarget;
+    if(!b.classList.contains('armed')){ b.classList.add('armed'); b.textContent = '本当に削除'; return; }
+    const it = byId(edit.id); if(it){ it.del = true; touch(it); expanded.delete(it.id); save(); }
+    closeSheet(); render();
+  };
+  if(!word){
+    const hint = () => {
+      const unit = $('eUnit').value, d = $('eDate').value;
+      $('eNwrap').style.display = (unit && unit !== 'weekday') ? '' : 'none';
+      $('eDays').style.display = unit === 'week' ? '' : 'none';
+      const lab = {day:'日', week:'週', month:'か月', year:'年'}[unit];
+      $('eHint').textContent = unit && !d ? 'くり返しを使うには、日付も入れてください。' :
+        unit ? 'Done を押すたびに、日付が次の予定日に進みます。' : '';
+    };
+    $('eUnit').onchange = hint; $('eDate').onchange = hint; hint();
+    $('sheet').querySelectorAll('.qk').forEach(q => q.onclick = () => {
+      const k = q.dataset.q;
+      $('eDate').value = k === 'today' ? today() : k === 'tomorrow' ? addDays(today(), 1) : '';
+      hint();
+    });
+    $('sheet').querySelectorAll('.dow button').forEach(b => b.onclick = () => b.classList.toggle('on'));
+  }
+}
+function grow(t){ t.style.height = 'auto'; t.style.height = Math.min(Math.max(t.scrollHeight + 2, 92), window.innerHeight * .5) + 'px'; }
+function closeSheet(){ $('shwrap').classList.remove('on'); edit = null; }
+$('shwrap').addEventListener('mousedown', e => { if(e.target === $('shwrap')) closeSheet(); });
+function saveSheet(){
+  const e = edit;
+  const text = $('eText').value.replace(/\s+$/, '');
+  if(!text.trim()){ toast('内容を入力してください'); return; }
+  e.text = text;
+  if(e.tab === 'word'){ e.author = $('eAuth').value.trim(); e.source = $('eSrc').value.trim(); }
+  if(e.tab !== 'word'){
+    e.date = $('eDate').value || '';
+    const unit = $('eUnit').value;
+    const n = Math.max(1, Math.min(99, parseInt($('eN').value, 10) || 1));
+    const days = [...$('sheet').querySelectorAll('.dow button.on')].map(b => +b.dataset.d);
+    e.repeat = {unit, n: (unit && unit !== 'weekday') ? n : 1, days: unit === 'week' ? days : []};
+    if(unit && !e.date) e.date = today();
+  }
+  delete e._new;
+  e.upd = Date.now();
+  const cur = byId(e.id);
+  if(cur) Object.assign(cur, e); else items.push(e);
+  save(); closeSheet(); render();
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && edit) closeSheet(); });
+
+/* ---------------- 設定 ---------------- */
+function renderSettings(){
+  $('view').innerHTML = `
+  <div class="card"><h3>同期（GitHub の非公開 Gist）</h3>
+    <div class="f"><label>アクセストークン（gist 権限）</label>
+      <input type="password" id="sTok" value="${esc(sync.token)}" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ghp_..."></div>
+    <div class="f"><label>Gist ID</label>
+      <input type="text" id="sGist" value="${esc(sync.gist)}" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="まだ無ければ下のボタンで作成"></div>
+    <div class="f"><label>合言葉（任意・入れると送る前に暗号化）</label>
+      <input type="password" id="sPass" value="${esc(sync.pass)}" autocomplete="off" placeholder="両方の端末で同じ言葉"></div>
+    <div class="brow">
+      <button class="btn" id="sNow">今すぐ同期</button>
+      <button class="btn ghost" id="sNew">＋ 置き場所を作る</button>
+    </div>
+    <div class="stat" id="sStat">${esc(syncStatusText())}</div>
+    <div class="hint">Notes とは別の Gist を使ってください（同じにすると上書きし合います）。トークンは Notes と同じものを使えます。書くと数秒後に自動で送られ、開いたときと一定間隔ごとに、新しいものを自動で取り込みます。両方の端末で別々に書いた内容は、項目ごとに新しい方が残ります。</div>
+  </div>
+  <div class="card"><h3>表示</h3>
+    <label class="chk"><input type="checkbox" id="pHide"${prefs.hideDone ? ' checked' : ''}>One-offs の完了したものを隠す</label>
+    <label class="chk" style="margin-top:8px"><input type="checkbox" id="pSound"${prefs.sound !== false ? ' checked' : ''}>Done を押したときの音</label>
+    <label class="chk" style="margin-top:8px"><input type="checkbox" id="pDog"${prefs.dog !== false ? ' checked' : ''}>タブの上を犬が歩く</label>
+  </div>
+  <div class="card"><h3>データ</h3>
+    <div class="brow">
+      <button class="btn ghost" id="dExp">書き出し（JSON）</button>
+      <button class="btn ghost" id="dImp">読み込み（統合）</button>
+    </div>
+    <input type="file" id="dFile" accept=".json,application/json" style="display:none">
+    <div class="hint">読み込みは今の内容に統合されます（上書きではありません）。項目数：習慣 ${live('habit').length} ／ 単発 ${live('once').length} ／ 言葉 ${live('word').length}</div>
+  </div>`;
+  const keep = () => {
+    sync.token = $('sTok').value.trim(); sync.gist = $('sGist').value.trim().toLowerCase(); sync.pass = $('sPass').value;
+    lsSet(SK, sync);
+  };
+  ['sTok', 'sGist', 'sPass'].forEach(i => $(i).addEventListener('change', keep));
+  $('sNow').onclick = () => { keep(); syncNow(true); };
+  $('sNew').onclick = async () => {
+    keep();
+    if(!sync.token){ setStat('先にアクセストークンを入れてください', true); return; }
+    try{
+      setStat('置き場所を作っています…');
+      sync.gist = await ghCreate(); lsSet(SK, sync); $('sGist').value = sync.gist;
+      await syncNow(true);
+    }catch(err){ setStat(errText(err), true); }
+  };
+  $('pHide').onchange = e => { prefs.hideDone = e.target.checked; lsSet(PK, prefs); };
+  $('pSound').onchange = e => { prefs.sound = e.target.checked; lsSet(PK, prefs); if(prefs.sound) fanfare(false); };
+  $('pDog').onchange = e => { prefs.dog = e.target.checked; lsSet(PK, prefs); DOGS.toggle(prefs.dog); };
+  $('dExp').onclick = () => {
+    const blob = new Blob([JSON.stringify({app:'habits', v:1, at:Date.now(), items}, null, 1)], {type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'habits-' + today() + '.json'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  };
+  $('dImp').onclick = () => $('dFile').click();
+  $('dFile').onchange = e => {
+    const f = e.target.files[0]; if(!f) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      try{
+        const d = JSON.parse(rd.result);
+        const arr = Array.isArray(d) ? d : d.items;
+        if(!Array.isArray(arr)) throw new Error('形式が違います');
+        items = mergeItems(items, arr.filter(validItem)); save(); render(); toast('読み込みました');
+      }catch(err){ toast('読み込めませんでした：' + err.message); }
+    };
+    rd.readAsText(f);
+  };
+}
+
+/* ---------------- 同期（Notes と同じ GitHub Gist 方式） ---------------- */
+const GH = 'https://api.github.com', GHFILE = 'habits-sync.json';
+let syncBusy = false, syncAgain = false, syncState = {msg:'', err:false, cls:''};
+const validItem = i => i && typeof i.id === 'string' && ['habit', 'once', 'word'].includes(i.tab) && typeof i.text === 'string';
+function mergeItems(a, b){
+  const m = new Map();
+  for(const i of a) m.set(i.id, i);
+  for(const i of b){
+    if(!validItem(i)) continue;
+    i.done = Array.isArray(i.done) ? i.done : [];
+    const c = m.get(i.id);
+    if(!c || (i.upd || 0) > (c.upd || 0)) m.set(i.id, i);
+  }
+  const cut = Date.now() - 60 * 86400000;
+  return [...m.values()].filter(i => !(i.del && (i.upd || 0) < cut));
+}
+const sig = arr => JSON.stringify([...arr].sort((x, y) => x.id < y.id ? -1 : 1).map(i => [i.id, i.upd || 0]));
+function errText(e){ return (e && e.message) ? e.message : String(e || '不明なエラー'); }
+function setStat(msg, err){
+  syncState.msg = msg; syncState.err = !!err;
+  const s = $('sStat'); if(s){ s.textContent = msg; s.className = 'stat' + (err ? ' err' : ''); }
+}
+function syncStatusText(){
+  if(syncState.msg) return syncState.msg;
+  if(!syncOn()) return 'まだ同期していません（トークンと Gist ID を入れてください）';
+  return sync.last ? '最終同期 ' + new Date(sync.last).toLocaleString('ja-JP') : '';
+}
+function setDot(c){ $('sdot').className = 'dot ' + c; }
+const syncOn = () => !!(sync.token && sync.gist);
+const ghHead = json => { const h = {authorization:'Bearer ' + sync.token, accept:'application/vnd.github+json'}; if(json) h['content-type'] = 'application/json'; return h; };
+async function ghFetch(url, opt){
+  try{ return await fetch(url, opt); }
+  catch(e){ throw new Error('GitHub に接続できませんでした。通信状態を確認してください'); }
+}
+/* 暗号化（合言葉があるとき） */
+const b64 = buf => { const u = new Uint8Array(buf); let s = ''; for(let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(s); };
+const unb64 = s => { const b = atob(s), u = new Uint8Array(b.length); for(let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; };
+async function aesKey(pass){
+  if(!(window.crypto && crypto.subtle)) throw new Error('この開き方では暗号化が使えません（合言葉を空にするか、https で開いてください）');
+  const enc = new TextEncoder();
+  const base = await crypto.subtle.importKey('raw', enc.encode(pass), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2', salt:enc.encode('habits.sync.salt.v1'), iterations:120000, hash:'SHA-256'},
+    base, {name:'AES-GCM', length:256}, false, ['encrypt', 'decrypt']);
+}
+async function encText(json){
+  if(!sync.pass) return {enc:false, body:json};
+  const k = await aesKey(sync.pass), iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({name:'AES-GCM', iv}, k, new TextEncoder().encode(json));
+  return {enc:true, iv:b64(iv), body:b64(ct)};
+}
+async function decText(p){
+  if(!p.enc) return p.body || '{}';
+  if(!sync.pass) throw new Error('GitHub 側は暗号化されています。合言葉を入れてください');
+  try{
+    const k = await aesKey(sync.pass);
+    return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM', iv:unb64(p.iv)}, k, unb64(p.body)));
+  }catch(e){ throw new Error((window.crypto && crypto.subtle) ? '合言葉が違います' : e.message); }
+}
+async function ghGet(){
+  const r = await ghFetch(`${GH}/gists/${sync.gist}`, {headers:ghHead(), cache:'no-store'});
+  if(r.status === 404) throw new Error('Gist が見つかりません（ID を確認してください）');
+  if(r.status === 401) throw new Error('トークンが違います');
+  if(!r.ok) throw new Error('取得できません（' + r.status + '）');
+  const g = await r.json(), f = g.files && g.files[GHFILE];
+  if(!f) return null;
+  let txt = f.content;
+  if(f.truncated && f.raw_url) txt = await (await ghFetch(f.raw_url, {})).text();
+  try{ const d = JSON.parse(txt); return d && d.payload ? d : null; }catch(e){ return null; }
+}
+async function ghPut(payload){
+  const content = JSON.stringify({v:1, at:Date.now(), payload});
+  const r = await ghFetch(`${GH}/gists/${sync.gist}`, {method:'PATCH', headers:ghHead(true), body:JSON.stringify({files:{[GHFILE]:{content}}})});
+  if(r.status === 401) throw new Error('トークンが違います（gist の権限が要ります）');
+  if(r.status === 403 || r.status === 404) throw new Error('書き込めません。トークンの gist 権限と Gist ID を確認してください');
+  if(!r.ok) throw new Error('送れません（' + r.status + '）');
+}
+async function ghCreate(){
+  const r = await ghFetch(`${GH}/gists`, {method:'POST', headers:ghHead(true),
+    body:JSON.stringify({description:'Habits sync', public:false, files:{[GHFILE]:{content:'{"v":1}'}}})});
+  if(r.status === 401) throw new Error('トークンが違います（gist の権限が要ります）');
+  if(!r.ok) throw new Error('作れません（' + r.status + '）');
+  return (await r.json()).id;
+}
+/* 取り込み → 統合 → 差があれば送る、を一度にやる */
+async function syncNow(loud){
+  if(!syncOn()){ if(loud) setStat('トークンと Gist ID を入れてください', true); return; }
+  if(syncBusy){ syncAgain = true; return; }
+  syncBusy = true; clearTimeout(syncTimer); setDot('busy');
+  if(loud) setStat('同期しています…');
+  try{
+    const remote = await ghGet();
+    let rItems = [];
+    if(remote){
+      const d = JSON.parse(await decText(remote.payload));
+      rItems = Array.isArray(d.items) ? d.items.filter(validItem) : [];
+    }
+    const before = sig(items);
+    const merged = mergeItems(items, rItems);
+    const changedLocal = sig(merged) !== before;
+    if(changedLocal){ items = merged; lsSet(DK, {items}); }
+    if(!remote || sig(merged) !== sig(rItems) || !!remote.payload.enc !== !!sync.pass) await ghPut(await encText(JSON.stringify({items: merged})));
+    sync.last = Date.now(); lsSet(SK, sync);
+    setDot('ok');
+    setStat('同期しました　' + new Date(sync.last).toLocaleTimeString('ja-JP'));
+    if(changedLocal && !edit && prefs.tab !== 'set') render();
+  }catch(e){
+    setDot('err'); setStat(errText(e), true);
+  }finally{
+    syncBusy = false;
+    if(syncAgain){ syncAgain = false; scheduleSync(1500); }
+  }
+}
+function scheduleSync(ms){
+  if(!syncOn()) { setDot(''); return; }
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(() => syncNow(false), ms || 5000);
+}
+document.addEventListener('visibilitychange', () => {
+  if(document.visibilityState === 'visible'){
+    if(!edit && prefs.tab !== 'set') render();
+    if(syncOn() && Date.now() - (sync.last || 0) > 15000) syncNow(false);
+  }else if(syncOn()){
+    clearTimeout(syncTimer); syncNow(false);
+  }
+});
+setInterval(() => { if(document.visibilityState === 'visible' && syncOn() && !edit) syncNow(false); }, 60000);
+/* 朝5時をまたいだら、Done ボタンを元の色に戻す（回数はそのまま） */
+let dayNow = today();
+setInterval(() => { const d = today(); if(d !== dayNow){ dayNow = d; if(!edit && prefs.tab !== 'set') render(); } }, 30000);
+
+/* ---------------- お祝いの音（Tasks のチェック音「ハープ」と同じ、響きのある音） ---------------- */
+let AC = null, REV = null, WET = null;
+function fanfare(big){
+  if(prefs.sound === false) return;
+  try{
+    const A = window.AudioContext || window.webkitAudioContext; if(!A) return;
+    AC = AC || new A();
+    if(AC.state === 'suspended') AC.resume();
+    if(!REV){
+      const sec = 2.6, sr = AC.sampleRate, buf = AC.createBuffer(2, Math.floor(sr * sec), sr);
+      for(let ch = 0; ch < 2; ch++){
+        const d = buf.getChannelData(ch);
+        for(let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 2.6);
+      }
+      REV = AC.createConvolver(); REV.buffer = buf;
+      WET = AC.createGain(); REV.connect(WET); WET.connect(AC.destination);
+    }
+    const t0 = AC.currentTime + .01;
+    const play = (notes, gap, dec, vol, wet, at) => {
+      WET.gain.value = wet;
+      notes.forEach((f, i) => {
+        const d = at + i * gap, o = AC.createOscillator(), g = AC.createGain();
+        o.type = 'sine'; o.frequency.value = f;
+        const v = vol * (1 - i * .05);
+        g.gain.setValueAtTime(.0001, t0 + d);
+        g.gain.exponentialRampToValueAtTime(v, t0 + d + .012);
+        g.gain.exponentialRampToValueAtTime(.0001, t0 + d + dec);
+        o.connect(g); g.connect(AC.destination); g.connect(REV);
+        o.start(t0 + d); o.stop(t0 + d + dec + .1);
+      });
+    };
+    play([784.0, 1046.5, 1318.5, 1568.0, 2093.0], .06, 2.2, .12, .75, 0);      // ハープ
+    if(big) play([1568.0, 2093.0, 2637.0], .08, 2.4, .07, .9, .42);             // 5回ごとに きらめき
+  }catch(e){}
+}
+
+/* ---------------- 花火：押した回数ぶん上がる（One Step と同じ絵） ---------------- */
+const FW_HUES = [50, 190, 330, 0, 275, 25, 150];
+const FW_MAX = 60;                       // 一度に上げる上限（多いときは間隔を詰める）
+function spawnFirework(){
+  const layer = $('fwLayer'), W = layer.clientWidth || innerWidth, H = layer.clientHeight || innerHeight;
+  const hue = FW_HUES[Math.floor(Math.random() * FW_HUES.length)];
+  const rays = 14 + Math.floor(Math.random() * 3) * 2;
+  const reach = 14 + Math.random() * 7;
+  const climb = 58 + Math.random() * 42, sway = (Math.random() - .5) * 18;
+  let html = `<span class="fw-rise" style="--rise:${climb.toFixed(0)}px;--rx:${sway.toFixed(0)}px"></span>`
+           + `<span class="fw-core" style="color:hsl(${hue},95%,78%)"></span>`;
+  for(let i = 0; i < rays; i++){
+    const len = (i % 2 ? reach * .66 : reach).toFixed(1);
+    html += `<span class="fw-ray" style="--a:${(360 / rays * i).toFixed(1)}deg;--len:${len}px;color:hsl(${hue},92%,${i % 2 ? 72 : 60}%)"></span>`;
+  }
+  const el = document.createElement('div');
+  el.className = 'fw'; el.innerHTML = html;
+  el.style.left = (W * .1 + Math.random() * W * .8).toFixed(0) + 'px';
+  el.style.top = (H * .14 + Math.random() * H * .42).toFixed(0) + 'px';
+  el.style.setProperty('--fs', (1.15 + Math.random() * .35).toFixed(2));
+  layer.appendChild(el);
+  setTimeout(() => el.remove(), 2600);
+}
+/* 紙吹雪（One Step のゴールの紙吹雪と同じ）。Done ボタンから はじける */
+function confetti(btn, big){
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const layer = $('fwLayer');
+  let cx = innerWidth / 2, cy = innerHeight / 3;
+  if(btn){ const r = btn.getBoundingClientRect(); cx = r.left + r.width / 2; cy = r.top + r.height / 2; }
+  const palette = ['#E9B441', '#C98A12', '#F5D77A', '#F2A62D', '#46AFC2', '#7ACBD9', '#E07A3C'];
+  const box = document.createElement('div');
+  const waves = big ? 3 : 2;
+  for(let wave = 0; wave < waves; wave++){
+    const count = 30;
+    for(let i = 0; i < count; i++){
+      const p = document.createElement('span');
+      p.className = 'confetti';
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - .5) * .5;
+      const dist = 120 + Math.random() * 190 + wave * 20;
+      const w = 5 + Math.random() * 8, sq = Math.random() < .45, h = sq ? w : w * (1.6 + Math.random());
+      // 丸は正方形のときだけ（楕円は作らない）
+      p.style.cssText = `left:${cx}px;top:${cy}px;width:${w}px;height:${h}px;background:${palette[Math.floor(Math.random() * palette.length)]};border-radius:${sq && Math.random() < .5 ? '50%' : '2px'}`;
+      p.style.setProperty('--dx', (Math.cos(angle) * dist).toFixed(0) + 'px');
+      p.style.setProperty('--dy', (Math.sin(angle) * dist + 70 + Math.random() * 90).toFixed(0) + 'px');
+      p.style.setProperty('--rot', (Math.random() * 900 - 450).toFixed(0) + 'deg');
+      p.style.setProperty('--dur', (1.6 + Math.random() * 1.1).toFixed(2) + 's');
+      p.style.animationDelay = (wave * .26 + Math.random() * .16).toFixed(2) + 's';
+      box.appendChild(p);
+    }
+  }
+  layer.appendChild(box);
+  setTimeout(() => box.remove(), 3800);
+}
+function fireworks(n){
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  n = Math.max(1, Math.min(FW_MAX, n | 0));
+  const gap = Math.max(90, Math.min(420, 5200 / n));
+  for(let i = 0; i < n; i++) setTimeout(spawnFirework, i * gap + Math.random() * gap * .6);
+}
+
+/* ---------------- タブの上の犬 ---------------- */
+const DOG_SVG = `<svg viewBox="0 0 34 34" width="34" height="34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g class="pose"><g class="bob">
+      <path class="tail dog-body" d="M7.5 14.6C4.45 12.75, 3.15 9.2, 6.0 7.1C8.3 5.5, 11.2 6.7, 10.95 9.1C10.9 9.75, 10.0 9.8, 10.0 9.05C10.05 8.1, 8.45 7.95, 7.5 8.95C6.7 9.9, 7.55 12.1, 10.0 13.1 Z"/>
+      <g class="leg-b gp-h1"><path class="dog-dark lg-h1" d="M8.5 20.4A1.4 1.4 0 0 1 9.9 19L10.1 19A1.4 1.4 0 0 1 11.5 20.4L11.5 23.4C12.35 23.8 12.35 25.35 11.55 25.8C10.85 26.2 9.35 26.15 8.82 25.45C8.54 25.1 8.5 24.55 8.5 23.95Z"/></g>
+      <g class="leg-a gp-f1"><path class="dog-dark" d="M18.2 20.4A1.4 1.4 0 0 1 19.6 19L19.8 19A1.4 1.4 0 0 1 21.2 20.4L21.2 23.4C22.05 23.8 22.05 25.35 21.25 25.8C20.55 26.2 19.05 26.15 18.52 25.45C18.24 25.1 18.2 24.55 18.2 23.95Z"/></g>
+      <rect class="dog-body" x="6.5" y="12" width="18" height="9" rx="4.5"/>
+      <g class="leg-a gp-h2"><path class="dog-body lg-h2" d="M11.5 20.4A1.4 1.4 0 0 1 12.9 19L13.1 19A1.4 1.4 0 0 1 14.5 20.4L14.5 23.4C15.35 23.8 15.35 25.35 14.55 25.8C13.85 26.2 12.35 26.15 11.82 25.45C11.54 25.1 11.5 24.55 11.5 23.95Z"/></g>
+      <g class="leg-b gp-f2"><path class="dog-body" d="M20.6 20.4A1.4 1.4 0 0 1 22 19L22.2 19A1.4 1.4 0 0 1 23.6 20.4L23.6 23.4C24.45 23.8 24.45 25.35 23.65 25.8C22.95 26.2 21.45 26.15 20.92 25.45C20.64 25.1 20.6 24.55 20.6 23.95Z"/></g>
+      <circle class="dog-body" cx="26" cy="12.5" r="5.4"/>
+      <g clip-path="url(#dgHead)"><path class="dog-light" d="M33.2 11.5C32 12.4 30.6 12.85 29.2 12.95C27.8 13.05 26.8 13.45 25.6 13.6C23.4 14 21 13.8 18.8 13.2L18.8 20 L33.2 20Z"/></g>
+      <path class="dog-dark ear" d="M23.4 8.4 C23.2 6.4, 23.95 4.9, 25.4 5.2 C26.2 6.2, 26 7.6, 25.4 9 Z"/>
+      <ellipse class="dog-light" cx="27.2" cy="9.8" rx=".95" ry=".55"/>
+      <circle class="dog-nose dog-eye" cx="27" cy="11.4" r="0.95"/>
+      <ellipse class="dog-glint" cx="26.68" cy="11.03" rx=".28" ry=".33" fill="#fff" opacity=".9"/>
+      <ellipse class="dog-light" cx="29.75" cy="13.95" rx="2.35" ry="1.95"/>
+      <ellipse class="dog-nose" cx="31.25" cy="13.1" rx=".92" ry=".76"/>
+      <g class="dog-collar" clip-path="url(#dgNeck)"><circle cx="26" cy="12.5" r="5.85"
+        fill="none" stroke="var(--collar,#9E3742)" stroke-width="1.35"/></g>
+      <path class="dog-shut" d="M25.8 11.25 A1.2 1.2 0 0 0 28.2 11.25"/><g class="dog-front"><path class="dog-dark dogf-ear" d="M28.6 8.4 C28.8 6.4, 28.05 4.9, 26.6 5.2 C25.8 6.2, 26 7.6, 26.6 9 Z"/><g class="dogf-face"><g clip-path="url(#dgHead)"><ellipse class="dog-light" cx="26.2" cy="16.5" rx="4.5" ry="4"/></g><ellipse class="dog-light" cx="23.95" cy="9.7" rx="1" ry=".55"/><ellipse class="dog-light" cx="28.2" cy="9.75" rx=".92" ry=".5"/><path class="dog-nose" d="M24.85 13.35C24.85 12.5 27.65 12.5 27.65 13.35C27.65 14.4 26.95 15.25 26.25 15.25C25.55 15.25 24.85 14.4 24.85 13.35Z"/><path class="dog-shut" d="M22.85 11.2 A2.05 2.05 0 0 0 25.21 11.2"/><path class="dog-shut" d="M27.03 11.25 A1.95 1.95 0 0 0 29.23 11.25"/></g></g>
+    </g></g>
+  </svg>`;
+const DOGS = (function(){
+  const strip = $('dogStrip');
+  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const POSE = ['gt-walk', 'gt-run', 'sit', 'lie', 'sleep', 'zz2', 'zz3'];
+  const COATS = ['coat-beige', 'coat-black', 'coat-brown'];
+  let W = innerWidth, dog = null, pups = [], zzz = null, raf = 0, last = 0, on = false;
+  let nextPups = performance.now() + 20000 + Math.random() * 40000, pupsUntil = 0;
+  let ball = null, nextBall = performance.now() + 40000 + Math.random() * 50000;
+  function rollBall(now){
+    const el = document.createElement('div'); el.className = 'rollball';
+    el.innerHTML = COAT_SVG[Math.floor(Math.random() * COAT_SVG.length)];
+    strip.appendChild(el);
+    const dir = Math.random() < .5 ? 1 : -1;
+    // 大きさは毎回いろいろ（幅 16〜36px）
+    const bw = 16 + Math.random() * 20, bh = bw * 70 / 64, rad = bw * 28.5 / 64;
+    el.style.width = bw.toFixed(1) + 'px'; el.style.height = bh.toFixed(1) + 'px';
+    el.style.bottom = (-(bh * 6.5 / 70) - 1.5).toFixed(1) + 'px';
+    ball = {el, svg: el.firstElementChild, dir, x: dir > 0 ? -bw - 8 : W + 8, v: 55 + Math.random() * 30 + bw * 1.2, rot: 0, rad};
+    // 起きていれば、犬も追いかける
+    if(dog.pose !== 'sleep' && Math.random() < .65){
+      setTimeout(() => { if(!on || !dog) return; dog.dir = dir; setPose(dog, 'run'); zzz.classList.remove('on');
+        dog.until = performance.now() + 2500 + Math.random() * 2500; }, 700 + Math.random() * 600);
+    }
+  }
+  function moveBall(dt){
+    ball.x += ball.dir * ball.v * dt;
+    ball.rot += ball.dir * ball.v * dt / ball.rad * 57.3;    // 大きさに合わせて転がる
+    ball.el.style.transform = `translateX(${ball.x.toFixed(1)}px)`;
+    ball.svg.style.transform = `rotate(${ball.rot.toFixed(1)}deg)`;
+    if(ball.x < -50 || ball.x > W + 50){ ball.el.remove(); ball = null; nextBall = performance.now() + 120000 + Math.random() * 180000; }
+  }
+  function make(cls){
+    const el = document.createElement('div');
+    el.className = 'walker ' + cls; el.innerHTML = DOG_SVG; strip.appendChild(el); return el;
+  }
+  function setPose(d, pose){
+    d.el.classList.remove(...POSE);
+    if(pose === 'walk') d.el.classList.add('gt-walk');
+    else if(pose === 'run') d.el.classList.add('gt-run');
+    else if(pose === 'sleep'){ d.el.classList.add('sleep'); const r = Math.random(); if(r < .33) d.el.classList.add('zz2'); else if(r < .6) d.el.classList.add('zz3'); }
+    else d.el.classList.add(pose);
+    d.pose = pose;
+  }
+  function paint(d){
+    d.el.style.transform = `translateX(${d.x.toFixed(1)}px)`;
+    d.el.style.setProperty('--f', d.dir);
+  }
+  const MODES = [['walk', 34, 6, 14], ['run', 12, 2, 4], ['sit', 20, 90, 200], ['lie', 16, 120, 260], ['sleep', 18, 180, 360]];
+  function nextMode(){
+    let r = Math.random() * 100, m = MODES[0];
+    for(const x of MODES){ if((r -= x[1]) < 0){ m = x; break; } }
+    if(m[0] === dog.pose && m[0] !== 'walk') m = MODES[0];
+    // 寝ていたら、いきなり走らずに まず起きてすわる
+    if(dog.pose === 'sleep' && m[0] === 'run') m = MODES[2];
+    setPose(dog, m[0]);
+    if((m[0] === 'walk' || m[0] === 'run') && Math.random() < .3) dog.dir *= -1;
+    dog.until = performance.now() + (m[2] + Math.random() * (m[3] - m[2])) * 1000;
+    zzz.classList.toggle('on', m[0] === 'sleep');
+  }
+  const SPEED = {walk:22, run:68};
+  function step(now){
+    raf = requestAnimationFrame(step);
+    const dt = Math.min(.1, (now - (last || now)) / 1000); last = now;
+    W = strip.clientWidth || innerWidth;
+    if(now > dog.until) nextMode();
+    const sp = SPEED[dog.pose] || 0;
+    if(sp){
+      dog.x += dog.dir * sp * dt;
+      if(dog.x < 2){ dog.x = 2; dog.dir = 1; }
+      if(dog.x > W - 41){ dog.x = W - 41; dog.dir = -1; }
+    }
+    if(!ball && now > nextBall) rollBall(now);
+    if(ball) moveBall(dt);
+    paint(dog);
+    zzz.style.transform = `translateX(${(dog.x + (dog.dir > 0 ? 27 : 2)).toFixed(1)}px)`;
+    // 子犬：ときどき 端からやってきて、しばらく一緒にいて、帰っていく
+    if(!pups.length && now > nextPups){
+      const n = 1 + Math.floor(Math.random() * 3);   // 1〜3匹
+      for(let i = 0; i < n; i++){
+        const el = make('pup ' + ['', 'p2 ', 'p3 '][i] + COATS[Math.floor(Math.random() * COATS.length)]);
+        el.style.bottom = [-5.5, -5.1, -4.3][i] + 'px';
+        const p = {el, x: dog.dir > 0 ? -30 - i * 26 : W + 8 + i * 26, dir: dog.dir, gap: 30 + i * 24, out:false, pose:''};
+        setPose(p, 'run'); paint(p); pups.push(p);
+      }
+      pupsUntil = now + 30000 + Math.random() * 40000;
+    }
+    if(pups.length && now > pupsUntil) pups.forEach(p => p.out = true);
+    pups = pups.filter(p => {
+      const target = p.out ? (p.x < W / 2 ? -50 : W + 50) : dog.x + 8 - dog.dir * p.gap;
+      const d = target - p.x;
+      if(Math.abs(d) > 3){
+        const v = Math.min(Math.abs(d), (Math.abs(d) > 40 ? 75 : 30) * dt);
+        p.x += Math.sign(d) * v; p.dir = d < 0 ? -1 : 1;
+        const want = Math.abs(d) > 40 ? 'run' : 'walk';
+        if(p.pose !== want) setPose(p, want);
+      }else{
+        p.dir = dog.dir;
+        const want = sp ? (dog.pose === 'run' ? 'run' : 'walk') : dog.pose === 'sleep' ? (Math.random() < .002 ? 'sleep' : (p.pose === 'sleep' ? 'sleep' : 'lie')) : dog.pose;
+        if(p.pose !== want) setPose(p, want);
+      }
+      paint(p);
+      if(p.out && (p.x < -45 || p.x > W + 45)){ p.el.remove(); return false; }
+      return true;
+    });
+    if(!pups.length && pupsUntil && now > pupsUntil){ pupsUntil = 0; nextPups = now + 90000 + Math.random() * 120000; }
+  }
+  function start(){
+    if(on) return; on = true;
+    strip.classList.remove('off');
+    if(!dog){
+      dog = {el: make(''), x: Math.random() * Math.max(50, innerWidth - 60), dir: Math.random() < .5 ? 1 : -1, pose:'', until:0};
+      dog.el.style.bottom = '-9px';
+      zzz = document.createElement('span'); zzz.className = 'zzz'; zzz.innerHTML = '<i>z</i><i>z</i><i>z</i>';
+      zzz.style.bottom = '20px'; zzz.style.left = '0'; strip.appendChild(zzz);
+    }
+    if(reduce){ setPose(dog, 'sit'); paint(dog); return; }
+    nextMode(); last = 0; raf = requestAnimationFrame(step);
+  }
+  function stop(){ on = false; cancelAnimationFrame(raf); strip.classList.add('off'); }
+  function navH(){ document.documentElement.style.setProperty('--navh', $('tabs').offsetHeight + 'px'); }
+  addEventListener('resize', navH);
+  return {toggle(v){ navH(); v ? start() : stop(); }, navH};
+})();
+
+/* ---------------- 起動 ---------------- */
+let toastT;
+function toast(m){ const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2200); }
+$('tabs').addEventListener('click', e => {
+  const b = e.target.closest('button[data-tab]'); if(!b) return;
+  prefs.tab = b.dataset.tab; lsSet(PK, prefs); $('scroll').scrollTop = 0; render();
+});
+load();
+if(!['habit', 'once', 'word', 'set'].includes(prefs.tab)) prefs.tab = 'habit';
+render();
+DOGS.toggle(prefs.dog !== false);
+if(syncOn()){ setDot(''); setTimeout(() => syncNow(false), 400); }
+</script>
+</body>
+</html>
