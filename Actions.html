@@ -26,6 +26,8 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink);font:14px/1.7 var(--fdisp);display:flex;flex-direction:column;overflow:hidden}
+body{height:100vh;height:100dvh}
+.tabs{position:relative}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
 input,textarea,select{font:inherit;color:inherit}
 
@@ -183,7 +185,7 @@ body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .t
   opacity:0;pointer-events:none;transition:opacity .25s}
 .toast.on{opacity:1}
 /* ---------- 下タブの上を歩く犬（One Step と同じ絵・同じ動き） ---------- */
-.dogstrip{position:fixed;left:0;right:0;bottom:var(--navh,44px);height:50px;z-index:20;pointer-events:none;overflow:visible}
+.dogstrip{position:absolute;left:0;right:0;bottom:100%;height:50px;z-index:20;pointer-events:none;overflow:visible}
 .dogstrip.off{display:none}
 .walker{position:absolute;left:0;width:39px;height:39px;pointer-events:none;will-change:transform}
 .walker svg{width:100%;height:100%;overflow:visible;display:block;transform:scaleX(var(--f,1));transform-origin:50% 50%}
@@ -350,8 +352,8 @@ body.locked .top,body.locked .scroll,body.locked .tabs,body.locked .dogstrip{vis
 <radialGradient id="gPrD" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#8B7561"/><stop offset=".52" stop-color="#6E5339"/><stop offset="1" stop-color="#604832"/></radialGradient>
 <radialGradient id="gPrL" cx="33%" cy="24%" r="88%"><stop offset="0" stop-color="#D2BD9F"/><stop offset=".52" stop-color="#C7AC87"/><stop offset="1" stop-color="#AD9675"/></radialGradient>
 </defs></svg>
-<div class="dogstrip" id="dogStrip"></div>
 <nav class="tabs" id="tabs">
+  <div class="dogstrip" id="dogStrip"></div>
   <button data-tab="habit" aria-label="Habits"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8"/><path d="M20 4v4h-4"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 16"/><path d="M4 20v-4h4"/></svg></button>
   <button data-tab="once" aria-label="One-offs"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg></button>
   <button data-tab="word" aria-label="Words"><svg viewBox="0 0 24 24"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></button>
@@ -834,7 +836,8 @@ function renderSettings(){
   $('view').innerHTML = `
   <div class="card"><h3>同期（GitHub の非公開 Gist）</h3>
     <div class="f"><label>アクセストークン（gist 権限）</label>
-      <input type="password" id="sTok" value="${esc(sync.token)}" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ghp_..."></div>
+      <div style="display:flex;gap:6px"><input type="password" id="sTok" value="${esc(sync.token)}" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="ghp_..." style="flex:1">
+      <button class="btn ghost" id="sEye" type="button" style="padding:6px 12px;font-size:12px">表示</button></div></div>
     <div class="f"><label>Gist ID</label>
       <input type="text" id="sGist" value="${esc(sync.gist)}" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="まだ無ければ下のボタンで作成"></div>
     <div class="f"><label>合言葉（任意・入れると送る前に暗号化）</label>
@@ -871,10 +874,12 @@ function renderSettings(){
     <div class="hint">読み込みは今の内容に統合されます（上書きではありません）。項目数：習慣 ${live('habit').length} ／ 単発 ${live('once').length} ／ 言葉 ${live('word').length}</div>
   </div>`;
   const keep = () => {
-    sync.token = $('sTok').value.trim(); sync.gist = $('sGist').value.trim().toLowerCase(); sync.pass = $('sPass').value;
+    sync.token = $('sTok').value.replace(/[\s\u200b\u3000"'`]/g, '');
+    $('sTok').value = sync.token; sync.gist = $('sGist').value.trim().toLowerCase(); sync.pass = $('sPass').value;
     lsSet(SK, sync);
   };
   ['sTok', 'sGist', 'sPass'].forEach(i => $(i).addEventListener('change', keep));
+  $('sEye').onclick = () => { const s = $('sTok'); const show = s.type === 'password'; s.type = show ? 'text' : 'password'; $('sEye').textContent = show ? '隠す' : '表示'; };
   $('sNow').onclick = () => { keep(); syncNow(true); };
   $('sNew').onclick = async () => {
     keep();
@@ -988,7 +993,7 @@ async function decText(p){
 async function ghGet(){
   const r = await ghFetch(`${GH}/gists/${sync.gist}`, {headers:ghHead(), cache:'no-store'});
   if(r.status === 404) throw new Error('Gist が見つかりません（ID を確認してください）');
-  if(r.status === 401) throw new Error('トークンが違います');
+  if(r.status === 401) throw new Error(tokErr());
   if(!r.ok) throw new Error('取得できません（' + r.status + '）');
   const g = await r.json(), f = g.files && g.files[GHFILE];
   if(!f) return null;
@@ -996,17 +1001,22 @@ async function ghGet(){
   if(f.truncated && f.raw_url) txt = await (await ghFetch(f.raw_url, {})).text();
   try{ const d = JSON.parse(txt); return d && d.payload ? d : null; }catch(e){ return null; }
 }
+function tokErr(){
+  const k = sync.token;
+  if(!/^(ghp_|github_pat_)/.test(k)) return 'トークンが違います。ghp_ または github_pat_ で始まる文字をそのまま貼ってください（いま「' + k.slice(0, 6) + '…」で始まっています）';
+  return 'トークンが使えません。期限切れ・削除済み・コピーの途中切れのどれかです。新しく作り直してください';
+}
 async function ghPut(payload){
   const content = JSON.stringify({v:1, at:Date.now(), payload});
   const r = await ghFetch(`${GH}/gists/${sync.gist}`, {method:'PATCH', headers:ghHead(true), body:JSON.stringify({files:{[GHFILE]:{content}}})});
-  if(r.status === 401) throw new Error('トークンが違います（gist の権限が要ります）');
+  if(r.status === 401) throw new Error(tokErr());
   if(r.status === 403 || r.status === 404) throw new Error('書き込めません。トークンの gist 権限と Gist ID を確認してください');
   if(!r.ok) throw new Error('送れません（' + r.status + '）');
 }
 async function ghCreate(){
   const r = await ghFetch(`${GH}/gists`, {method:'POST', headers:ghHead(true),
     body:JSON.stringify({description:'Habits sync', public:false, files:{[GHFILE]:{content:'{"v":1}'}}})});
-  if(r.status === 401) throw new Error('トークンが違います（gist の権限が要ります）');
+  if(r.status === 401) throw new Error(tokErr());
   if(!r.ok) throw new Error('作れません（' + r.status + '）');
   return (await r.json()).id;
 }
@@ -1214,7 +1224,7 @@ const DOGS = (function(){
     d.el.classList.remove(...POSE);
     if(pose === 'walk') d.el.classList.add('gt-walk');
     else if(pose === 'run') d.el.classList.add('gt-run');
-    else if(pose === 'sleep'){ d.el.classList.add('sleep'); const r = Math.random(); if(r < .33) d.el.classList.add('zz2'); else if(r < .6) d.el.classList.add('zz3'); }
+    else if(pose === 'sleep'){ d.el.classList.add('sleep'); const r = Math.random(); if(r < .4) d.el.classList.add('zz2'); }
     else d.el.classList.add(pose);
     d.pose = pose;
   }
