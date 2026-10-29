@@ -325,6 +325,34 @@ body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .t
 .row.flash{animation:flash 1.4s ease-out}
 @keyframes flash{0%,30%{box-shadow:0 0 0 3px var(--tc),var(--shadow)}100%{box-shadow:var(--shadow)}}
 
+/* ---------- 季節の空（One Step と同じ絵）：春は桜、秋は紅葉、冬は雪、夏は流れ星 ---------- */
+.wx{position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden}
+body.locked .wx{visibility:hidden}
+.season{position:absolute;left:0;top:0;pointer-events:none}
+.season svg{width:100%;height:auto;display:block}
+.season.drift{animation:wxDrift var(--life,9s) linear forwards}
+@keyframes wxDrift{
+  0%{opacity:0;transform:translate(var(--x),-24px) rotate(0deg)}
+  12%{opacity:var(--peak,.85)}
+  50%{transform:translate(calc(var(--x) + var(--sway)),calc(var(--fall) * .45)) rotate(200deg)}
+  85%{opacity:var(--peak,.85)}
+  100%{opacity:0;transform:translate(var(--x),var(--fall)) rotate(400deg)}}
+.season.streak{animation:wxStreak 1.9s cubic-bezier(.3,.5,.6,1) forwards}
+@keyframes wxStreak{
+  0%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--ang)) scale(.5)}
+  12%{opacity:1}70%{opacity:1}
+  100%{opacity:0;transform:translate(calc(var(--x) + var(--dx)),calc(var(--y) + var(--dy))) rotate(var(--ang)) scale(1)}}
+.season.drift.soft{animation-name:wxSoft}
+/* 白い雪はクリーム色の背景に溶けないよう、ほんのり影をつける */
+.season.soft svg{filter:drop-shadow(0 0 1.2px rgba(120,140,160,.55))}
+@keyframes wxSoft{
+  0%{opacity:0;transform:translate(var(--x),-14px)}
+  10%{opacity:var(--peak,.95)}
+  50%{transform:translate(calc(var(--x) + var(--sway)),calc(var(--fall) * .47))}
+  88%{opacity:var(--peak,.95)}
+  100%{opacity:0;transform:translate(var(--x),var(--fall))}}
+@media(prefers-reduced-motion:reduce){.wx{display:none}}
+
 /* ---------- 暗証番号ロック（Notes と同じ） ---------- */
 body.locked .top,body.locked .scroll,body.locked .tabs,body.locked .dogstrip{visibility:hidden}
 .lockwrap{position:fixed;inset:0;z-index:999;background:var(--bg);display:none;align-items:center;justify-content:center}
@@ -411,6 +439,7 @@ body.locked .top,body.locked .scroll,body.locked .tabs,body.locked .dogstrip{vis
 
 <div class="shwrap" id="shwrap"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
+<div class="wx" id="wx"></div>
 <div class="fwlayer" id="fwLayer"></div>
 <div class="lockwrap" id="lockwrap">
   <div class="lockbox">
@@ -1531,6 +1560,96 @@ const DOGS = (function(){
   return {toggle(v){ navH(); v ? start() : stop(); }, navH, season};
 })();
 
+/* ---------------- 季節の空（One Step と同じ絵） ----------------
+   3〜4月：桜の花びら　10〜11月：紅葉　12〜2月：雪（絶えず降る）　5〜9月：ときどき流れ星
+   試しに見るとき：?demo=spring / autumn / winter / summer */
+const WX = (function(){
+  const layer = $('wx');
+  const ART = {
+    blossom: () => {
+      const tint = ['#F3C6D2', '#EFB6C6', '#F8DCE4', '#F5CBD8'][Math.floor(Math.random() * 4)];
+      return `<svg viewBox="0 0 14 12"><path d="M7 1 C10.5 2, 13 5.5, 11.5 9 C8.5 11.5, 3.5 10.5, 1.8 7 C1.2 4, 3.5 1.4, 7 1z" fill="${tint}"/></svg>`;
+    },
+    leaves: () => {
+      const tint = ['#C96A3A', '#D89A3C', '#B14F35', '#C98A12'][Math.floor(Math.random() * 4)];
+      return `<svg viewBox="0 0 14 14"><path d="M7 0.8 8.9 4.4 12.8 3.6 10.4 6.8 13 9.6 9.2 9.9 8.3 13.4 7 10.6 5.7 13.4 4.8 9.9 1 9.6 3.6 6.8 1.2 3.6 5.1 4.4z" fill="${tint}"/></svg>`;
+    },
+    /* 白い丸い雪（One Step の庭の雪と同じ絵） */
+    snow: () => {
+      const o = (.72 + Math.random() * .26).toFixed(2);
+      return `<svg viewBox="0 0 12 12">
+        <circle cx="6" cy="6" r="5.4" fill="#FFFFFF" opacity="${(o * .3).toFixed(2)}"/>
+        <circle cx="6" cy="6" r="4.1" fill="#FFFFFF" opacity="${o}"/>
+        <circle cx="5.1" cy="5" r="1.7" fill="#FFFFFF"/></svg>`;
+    },
+    stars: () => {
+      const id = 'sg' + Math.random().toString(36).slice(2, 7);
+      return `<svg viewBox="0 0 110 12"><defs><linearGradient id="${id}" x1="0" x2="1">
+          <stop offset="0" stop-color="#FFE066" stop-opacity="0"/>
+          <stop offset="0.65" stop-color="#FFD43B" stop-opacity="0.6"/>
+          <stop offset="1" stop-color="#F5C211" stop-opacity="1"/></linearGradient></defs>
+        <rect x="0" y="4.6" width="98" height="2.6" rx="1.3" fill="url(#${id})"/>
+        <circle cx="99" cy="5.9" r="4.4" fill="#FFD94A"/><circle cx="99" cy="5.9" r="2.2" fill="#FFF4B8"/></svg>`;
+    }
+  };
+  const DEMO = {spring:'blossom', autumn:'leaves', winter:'snow', summer:'stars'}[(location.search.match(/demo=(\w+)/) || [])[1]];
+  function season(){
+    if(DEMO) return DEMO;
+    const m = new Date().getMonth() + 1;
+    if(m >= 3 && m <= 4) return 'blossom';
+    if(m >= 5 && m <= 9) return 'stars';
+    if(m >= 10 && m <= 11) return 'leaves';
+    return 'snow';
+  }
+  function drift(kind){
+    const W = layer.clientWidth || innerWidth, H = layer.clientHeight || innerHeight;
+    const el = document.createElement('div');
+    const snow = kind === 'snow';
+    el.className = 'season drift' + (snow ? ' soft' : ''); el.innerHTML = ART[kind]();
+    el.style.width = (snow ? 4 + Math.random() * 7 : 12 + Math.random() * 4).toFixed(1) + 'px';
+    el.style.setProperty('--x', (-10 + Math.random() * (W + 20)).toFixed(0) + 'px');
+    el.style.setProperty('--sway', ((Math.random() - .5) * (snow ? 34 : 70)).toFixed(0) + 'px');
+    el.style.setProperty('--fall', (H + 30).toFixed(0) + 'px');
+    const life = (H / 300) * (snow ? 9 + Math.random() * 6 : 7 + Math.random() * 5);
+    el.style.setProperty('--life', life.toFixed(1) + 's');
+    el.style.setProperty('--peak', snow ? '.95' : '.85');
+    layer.appendChild(el);
+    setTimeout(() => el.remove(), life * 1000 + 200);
+  }
+  function streak(){
+    const W = layer.clientWidth || innerWidth, H = layer.clientHeight || innerHeight;
+    const el = document.createElement('div');
+    el.className = 'season streak'; el.innerHTML = ART.stars(); el.style.width = '110px';
+    el.style.setProperty('--x', (-60 + Math.random() * Math.max(60, W * .4)).toFixed(0) + 'px');
+    el.style.setProperty('--y', (H * .05 + Math.random() * H * .3).toFixed(0) + 'px');
+    const dx = Math.min(300, W * .55 + Math.random() * 60), ang = 26 + Math.random() * 12;
+    el.style.setProperty('--dx', dx.toFixed(0) + 'px');
+    el.style.setProperty('--dy', (dx * Math.tan(ang * Math.PI / 180)).toFixed(0) + 'px');
+    el.style.setProperty('--ang', ang.toFixed(0) + 'deg');
+    layer.appendChild(el);
+    setTimeout(() => el.remove(), 2200);
+  }
+  /* 次に何かを降らせる・流すまでの間隔 */
+  const GAP = {snow:[300, 600], blossom:[1800, 4200], leaves:[2200, 5000], stars:[150000, 270000]};
+  function tick(){
+    const s = season(), g = GAP[s];
+    if(document.visibilityState === 'visible' && !document.body.classList.contains('locked')){
+      if(s === 'stars') streak();
+      else drift(s);
+    }
+    setTimeout(tick, g[0] + Math.random() * (g[1] - g[0]));
+  }
+  function start(){
+    if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const s = season();
+    // 開いたときから少し舞っているように、最初に何粒か
+    if(s === 'snow') for(let i = 0; i < 10; i++) setTimeout(() => drift('snow'), i * 120);
+    if(s === 'blossom' || s === 'leaves') for(let i = 0; i < 3; i++) setTimeout(() => drift(s), i * 600);
+    setTimeout(tick, s === 'stars' ? (DEMO ? 1500 : 60000 + Math.random() * 60000) : 800);
+  }
+  return {start, streak, drift, season};
+})();
+
 /* ---------------- 暗証番号ロック（Notes と同じ動き） ---------------- */
 /* 全角の数字も半角にして、数字だけ4桁まで */
 const pinDigits = s => String(s || '').replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)).replace(/\D/g, '').slice(0, 4);
@@ -1599,6 +1718,7 @@ if(!['habit', 'once', 'word', 'set'].includes(prefs.tab)) prefs.tab = 'habit';
 if(prefs.pin) showLock();
 render();
 DOGS.toggle(true);   // 犬はいつもいる
+WX.start();
 if(syncOn()){ setDot(''); setTimeout(() => syncNow(false), 400); }
 </script>
 </body>
