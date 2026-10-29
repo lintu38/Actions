@@ -67,14 +67,24 @@ body[data-tab=set]{--tc:#ddd6cf;--acc:#a8957f;--accsoft:#eee8e1;--rgb:168,149,12
 .cite{text-align:right;font-size:12.5px;color:#6e6668;margin:-4px 16px 0;padding-bottom:11px;letter-spacing:.02em;font-weight:400}
 .cite i{font-style:italic}
 body[data-tab=word],body[data-tab=word] .row,body[data-tab=word] .row *,body[data-tab=word] .sheet,body[data-tab=word] .sheet *,
-body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .toast{font-family:var(--fserif)}
+body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .cntL,body[data-tab=word] .toast{font-family:var(--fserif)}
 .meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
 .chip{font-size:11px;letter-spacing:.02em;color:var(--muted);background:var(--line2);border-radius:99px;padding:1px 9px;line-height:1.7}
 .chip.today{background:var(--accsoft);color:var(--acc);font-weight:700}
 .chip.over{background:#f8e6e0;color:var(--warn);font-weight:600}
 .chip.rep{background:#efe9e0;color:var(--brown)}
 .right{flex:0 0 auto;display:flex;align-items:center;gap:8px;align-self:center}
-.cnt{font:600 13px var(--fdisp);color:var(--acc);min-width:30px;text-align:right;white-space:nowrap}
+.cntL{display:inline-flex;align-items:center;gap:3px;font:600 13px var(--fdisp);color:var(--acc);white-space:nowrap}
+.cntL .cb{display:inline-block;width:15px;height:16.5px;line-height:0}
+.cntL .cb svg{width:100%;height:100%}
+.right .cnt{display:none}
+/* スマホ：回数は数字だけ、Done ボタンの下に */
+@media (max-width:640px){
+  .right{flex-direction:column;gap:3px;align-self:flex-start;padding-top:1px}
+  .right .cntL{display:none}
+  .right .cnt{display:block}
+}
+.cnt{font:600 12px/1.2 var(--fdisp);color:var(--acc);min-height:14px;text-align:center;white-space:nowrap;letter-spacing:.02em}
 .dn{--lt:color-mix(in srgb,var(--acc) 58%,#fff);
   width:42px;height:42px;border-radius:50%;border:2px solid var(--lt);background:#fff;color:var(--lt);
   display:flex;align-items:center;justify-content:center;transition:transform .12s,background .15s,color .15s}
@@ -280,9 +290,6 @@ body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .t
 .rollball svg{width:100%;height:100%;display:block;transform-origin:50% 51.4%;overflow:visible}
 .ttlic{display:inline-flex;width:20px;height:20px;color:var(--brown)}
 .ttlic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.cnt{display:inline-flex;align-items:center;gap:3px}
-.cnt .cb{display:inline-block;width:15px;height:16.5px;line-height:0}
-.cnt .cb svg{width:100%;height:100%}
 
 /* ---------- ランダム表示（Notes の Bookshelf と同じ流れ） ---------- */
 .tbtns{display:flex;align-items:center;gap:10px}
@@ -302,7 +309,12 @@ body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .t
 .pickcard .rtop{padding-left:14px}
 .pick-f .btn:not(.ghost){background:var(--tc)}
 .pick-f{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
-.acts button.pk{color:var(--muted)}
+.acts button.ic{width:34px;height:31px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+.acts button.ic svg{width:18px;height:18px}
+.acts button.pk{color:#c9c0c2}
+.acts button.del{margin-left:auto;color:#b7aeb0}
+.acts button.del.armed{width:auto;padding:0 12px;gap:5px;background:var(--warn);border-color:var(--warn);color:#fff;font-size:12px}
+.acts button.rst.armed{background:var(--warn);border-color:var(--warn);color:#fff}
 .acts button.pk.on{background:var(--accsoft);color:var(--acc);border-color:transparent}
 .row.flash{animation:flash 1.4s ease-out}
 @keyframes flash{0%,30%{box-shadow:0 0 0 3px var(--tc),var(--shadow)}100%{box-shadow:var(--shadow)}}
@@ -525,6 +537,9 @@ let popId = null;
 const TITLES = {habit:'Habits', once:'One-offs', word:'Words', set:'Settings'};
 const GRIP = '<svg viewBox="0 0 14 20" fill="currentColor"><circle cx="4" cy="4" r="1.6"/><circle cx="10" cy="4" r="1.6"/><circle cx="4" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="4" cy="16" r="1.6"/><circle cx="10" cy="16" r="1.6"/></svg>';
 const BOOKMARK = '<svg class="bm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5h10a1 1 0 0 1 1 1V20l-6-4.2L6 20V4.5a1 1 0 0 1 1-1z"/></svg>';
+const ICON_EDIT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>';
+const ICON_DICE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="8.6" cy="8.6" r="1.25" fill="currentColor" stroke="none"/><circle cx="15.4" cy="8.6" r="1.25" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.25" fill="currentColor" stroke="none"/><circle cx="8.6" cy="15.4" r="1.25" fill="currentColor" stroke="none"/><circle cx="15.4" cy="15.4" r="1.25" fill="currentColor" stroke="none"/></svg>';
+const ICON_TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 7h15"/><path d="M9.5 7V5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v2"/><path d="M6.5 7l.9 11.2a2 2 0 0 0 2 1.8h5.2a2 2 0 0 0 2-1.8L17.5 7"/><path d="M10.2 11v5.2M13.8 11v5.2"/></svg>';
 const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
 
 function render(){
@@ -578,16 +593,17 @@ function rowHTML(it){
   const fin = isFinished(it);
   let chips = '';
   if(!word){
-    if(it.date){
-      const cls = fin ? '' : it.date < t ? ' over' : it.date === t ? ' today' : '';
+    if(it.date && !(it.tab === 'habit' && !(it.repeat && it.repeat.unit))){
+      const cls = fin ? '' : (it.date < t && it.tab !== 'habit') ? ' over' : it.date === t ? ' today' : '';
       chips += `<span class="chip${cls}">${esc(dateLabel(it.date))}</span>`;
     }
     if(it.repeat && it.repeat.unit) chips += `<span class="chip rep">↻ ${esc(repLabel(it.repeat))}</span>`;
   }
   const doneToday = it.done.length && dayOf(it.done[it.done.length - 1]) === t;
   const right = `<div class="right">
-      ${cnt ? `<span class="cnt"><i class="cb">${COAT_SVG[0]}</i>×${cnt}</span>` : ''}
+      ${cnt ? `<span class="cntL"><i class="cb">${COAT_SVG[0]}</i>×${cnt}</span>` : ''}
       <button class="dn${(doneToday || fin) ? ' on' : ''}" data-act="done" aria-label="Done">${word ? BOOKMARK : CHECK}</button>
+      <span class="cnt">${cnt || ''}</span>
     </div>`;
   return `<div class="row ${it.tab}${fin ? ' finished' : ''}" data-id="${it.id}">
     <div class="rtop" data-act="toggle">
@@ -620,14 +636,16 @@ function extHTML(it){
       }
       if(n > shown) h += `<span class="more">＋${n - shown}</span>`;
       body = `<div class="pile">${h}</div>
-        <div class="hist">最初 ${esc(tipText(it.done[0]))}　最新 ${esc(tipText(it.done[n - 1]))}</div>`;
+        <div class="hist">First ${esc(tipText(it.done[0]))}　Latest ${esc(tipText(it.done[n - 1]))}</div>`;
     }
   }
   return `<div class="ext">${body}
     <div class="acts">
-      <button data-act="edit">編集</button>
-      <button data-act="undo"${it.done.length ? '' : ' disabled'}>1回戻す</button>
-      ${(it.tab === 'habit' || it.tab === 'word') ? `<button data-act="pick" class="pk${it.pick === false ? '' : ' on'}">${it.pick === false ? 'ランダム候補にする' : 'ランダム候補'}</button>` : ''}
+      <button data-act="edit" class="ic" aria-label="編集" title="編集">${ICON_EDIT}</button>
+      <button data-act="undo"${it.done.length ? '' : ' disabled'}>Undo</button>
+      <button data-act="reset" class="rst"${it.done.length ? '' : ' disabled'}>All Reset</button>
+      ${(it.tab === 'habit' || it.tab === 'word') ? `<button data-act="pick" class="ic pk${it.pick === false ? '' : ' on'}" aria-label="ランダム候補" title="${it.pick === false ? 'ランダム候補に入れる' : 'ランダム候補（押すと外す）'}">${ICON_DICE}</button>` : ''}
+      <button data-act="del" class="ic del" aria-label="Delete" title="Delete">${ICON_TRASH}</button>
     </div></div>`;
 }
 
@@ -669,8 +687,24 @@ document.getElementById('view').addEventListener('click', e => {
   }
   if(act === 'edit'){ openSheet(it); return; }
   if(act === 'undo'){ it.done.pop(); touch(it); save(); render(); return; }
+  if(act === 'reset'){ if(armReset(a)){ it.done = []; touch(it); save(); render(); toast('回数を 0 に戻しました'); } return; }
+  if(act === 'del'){ if(armDel(a)){ it.del = true; touch(it); expanded.delete(it.id); save(); render(); toast('削除しました'); } return; }
 });
 
+/* All Reset は2回押しで確定（1回目は「Reset?」で待つ） */
+function armReset(b){
+  if(b.classList.contains('armed')) return true;
+  b.classList.add('armed'); b.textContent = 'Reset?';
+  setTimeout(() => { if(b.isConnected){ b.classList.remove('armed'); b.textContent = 'All Reset'; } }, 3000);
+  return false;
+}
+/* 削除も2回押しで確定（1回目は「Delete?」） */
+function armDel(b){
+  if(b.classList.contains('armed')) return true;
+  b.classList.add('armed'); b.innerHTML = ICON_TRASH + 'Delete?';
+  setTimeout(() => { if(b.isConnected){ b.classList.remove('armed'); b.innerHTML = ICON_TRASH; } }, 3000);
+  return false;
+}
 function pressDone(it){
   const was = it.done.length;
   doDone(it);
@@ -732,6 +766,8 @@ function showPicked(id){
     if(act === 'done'){ e.stopPropagation(); pressDone(cur); return; }
     if(act === 'toggle'){ if(expanded.has(cur.id)) expanded.delete(cur.id); else expanded.add(cur.id); render(); refreshPick(); return; }
     if(act === 'undo'){ cur.done.pop(); touch(cur); save(); render(); refreshPick(); return; }
+    if(act === 'reset'){ if(armReset(a)){ cur.done = []; touch(cur); save(); render(); refreshPick(); toast('回数を 0 に戻しました'); } return; }
+    if(act === 'del'){ if(armDel(a)){ cur.del = true; touch(cur); expanded.delete(cur.id); save(); closePick(); render(); toast('削除しました'); } return; }
     if(act === 'pick'){ cur.pick = cur.pick === false ? true : false; touch(cur); save(); render(); refreshPick(); return; }
     if(act === 'edit'){ closePick(); openSheet(cur); return; }
   });
@@ -845,8 +881,8 @@ function openSheet(it){
   const tab = prefs.tab;
   const isNew = !it;
   edit = isNew ? {
-    id: uid(), tab, text:'', date: tab === 'habit' ? today() : '',
-    repeat: tab === 'habit' ? {unit:'day', n:1, days:[]} : {unit:'', n:1, days:[]},
+    id: uid(), tab, text:'', date: tab === 'once' ? today() : '',     // One-offs だけ今日の日付から
+    repeat: {unit:'', n:1, days:[]},                                  // 繰り返しはどのタブも「なし」から
     done:[], order: nextOrder(tab), upd: 0, del:false, _new:true
   } : JSON.parse(JSON.stringify(it));
   edit.repeat ||= {unit:'', n:1, days:[]};
@@ -866,7 +902,7 @@ function drawSheet(){
       <div class="f"><label>Author</label><input type="text" id="eAuth" value="${esc(e.author || '')}" placeholder="e.g. Seneca" autocapitalize="words"></div>
       <div class="f"><label>Source</label><input type="text" id="eSrc" value="${esc(e.source || '')}" placeholder="e.g. Letters from a Stoic" autocapitalize="words"></div>
     </div>` : `
-    <div class="f"><label>日付<span class="qk" data-q="today">今日</span><span class="qk" data-q="tomorrow">明日</span><span class="qk" data-q="clear">なし</span></label>
+    <div class="f" id="eDateF"><label>日付<span class="qk" data-q="today">今日</span><span class="qk" data-q="tomorrow">明日</span><span class="qk" data-q="clear">なし</span></label>
       <input type="date" id="eDate" value="${esc(e.date)}"></div>
     <div class="two">
       <div class="f"><label>くり返し</label>
@@ -894,6 +930,11 @@ function drawSheet(){
     const hint = () => {
       const unit = $('eUnit').value, d = $('eDate').value;
       $('eNwrap').style.display = (unit && unit !== 'weekday') ? '' : 'none';
+      // Habits は繰り返しがあるときだけ日付を入れる
+      if(edit.tab === 'habit'){
+        $('eDateF').style.display = unit ? '' : 'none';
+        if(unit && !$('eDate').value) $('eDate').value = today();
+      }
       $('eDays').style.display = unit === 'week' ? '' : 'none';
       const lab = {day:'日', week:'週', month:'か月', year:'年'}[unit];
       $('eHint').textContent = unit && !d ? 'くり返しを使うには、日付も入れてください。' :
@@ -924,6 +965,7 @@ function saveSheet(){
     const days = [...$('sheet').querySelectorAll('.dow button.on')].map(b => +b.dataset.d);
     e.repeat = {unit, n: (unit && unit !== 'weekday') ? n : 1, days: unit === 'week' ? days : []};
     if(unit && !e.date) e.date = today();
+    if(e.tab === 'habit' && !unit) e.date = '';
   }
   delete e._new;
   e.upd = Date.now();
