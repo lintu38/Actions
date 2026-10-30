@@ -149,6 +149,9 @@ body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .t
 .tabs button[data-tab=set]{--c:#ddd6cf;--ln:#bfb2a2}
 .tabs button svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tabs button.on{background:var(--c);color:var(--brown)}
+/* 設定タブは小さめ */
+.tabs{grid-template-columns:repeat(3,1fr) 64px}
+.tabs button[data-tab=set] svg{width:19px;height:19px}
 
 /* ---------- 設定 ---------- */
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 14px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
