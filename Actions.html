@@ -1041,6 +1041,10 @@ function renderSettings(){
       <button class="btn ghost" id="dExp">書き出し（JSON）</button>
       <button class="btn ghost" id="dImp">読み込み（統合）</button>
     </div>
+    ${'showDirectoryPicker' in window ? `<div class="brow" style="margin-top:8px">
+      <button class="btn ghost" id="dDir">保存先を選ぶ…</button>
+      <span class="hint" id="dDirName" style="margin:0">書き出し先：（まだ選んでいません）</span></div>
+    <div class="hint">「Actions」フォルダの中の「Export」フォルダを選ぶと、以後はそこへ保存します。</div>` : ''}
     <input type="file" id="dFile" accept=".json,application/json" style="display:none">
     <div class="hint">読み込みは今の内容に統合されます（上書きではありません）。項目数：習慣 ${live('habit').length} ／ 単発 ${live('once').length} ／ 言葉 ${live('word').length}</div>
   </div>
@@ -1099,10 +1103,43 @@ function renderSettings(){
   $('pHide').onchange = e => { prefs.hideDone = e.target.checked; lsSet(PK, prefs); };
   $('pSound').onchange = e => { prefs.sound = e.target.checked; lsSet(PK, prefs); if(prefs.sound) fanfare(false); };
 
-  $('dExp').onclick = () => {
-    const blob = new Blob([JSON.stringify({app:'habits', v:1, at:Date.now(), items}, null, 1)], {type:'application/json'});
+  /* 書き出し：保存先のフォルダ（Actions/Export）が選んであればそこへ。選べないブラウザ（スマホなど）はダウンロード */
+  const expJson = () => JSON.stringify({app:'habits', v:1, at:Date.now(), items}, null, 1);
+  const expName = () => 'habits-' + today() + '.json';
+  const paintDir = async () => {
+    const el = $('dDirName'); if(!el) return;
+    const h = await expDirGet();
+    el.textContent = '書き出し先：' + (h ? h.name : '（まだ選んでいません）');
+  };
+  paintDir();
+  if($('dDir')) $('dDir').onclick = async () => {
+    try{
+      const h = await window.showDirectoryPicker({id:'actions-export', mode:'readwrite', startIn:'desktop'});
+      await expDirSet(h); paintDir(); toast('書き出し先を「' + h.name + '」にしました');
+    }catch(e){}
+  };
+  $('dExp').onclick = async () => {
+    if('showDirectoryPicker' in window){
+      try{
+        let h = await expDirGet();
+        if(!h){
+          toast('書き出し先に「Actions」フォルダの中の「Export」を選んでください');
+          h = await window.showDirectoryPicker({id:'actions-export', mode:'readwrite', startIn:'desktop'});
+          await expDirSet(h); paintDir();
+        }
+        if((await h.queryPermission({mode:'readwrite'})) !== 'granted'
+          && (await h.requestPermission({mode:'readwrite'})) !== 'granted') throw new Error('許可がありません');
+        const fh = await h.getFileHandle(expName(), {create:true});
+        const w = await fh.createWritable(); await w.write(expJson()); await w.close();
+        toast('「' + h.name + '」に ' + expName() + ' を書き出しました');
+        return;
+      }catch(e){
+        if(e && e.name === 'AbortError') return;      /* フォルダ選びをやめたとき */
+      }
+    }
+    const blob = new Blob([expJson()], {type:'application/json'});
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = 'habits-' + today() + '.json'; document.body.appendChild(a); a.click(); a.remove();
+    a.download = expName(); document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   };
   $('dImp').onclick = () => $('dFile').click();
@@ -1119,6 +1156,28 @@ function renderSettings(){
     };
     rd.readAsText(f);
   };
+}
+
+/* 書き出し先フォルダの記憶（IndexedDB に置く） */
+function expDB(){
+  return new Promise(res => {
+    try{
+      const r = indexedDB.open('habits-fs', 1);
+      r.onupgradeneeded = () => r.result.createObjectStore('h');
+      r.onsuccess = () => res(r.result); r.onerror = () => res(null);
+    }catch(e){ res(null); }
+  });
+}
+async function expDirGet(){
+  const db = await expDB(); if(!db) return null;
+  return new Promise(res => {
+    const q = db.transaction('h', 'readonly').objectStore('h').get('exportDir');
+    q.onsuccess = () => res(q.result || null); q.onerror = () => res(null);
+  });
+}
+async function expDirSet(h){
+  const db = await expDB(); if(!db) return;
+  await new Promise(res => { const t = db.transaction('h', 'readwrite'); t.objectStore('h').put(h, 'exportDir'); t.oncomplete = res; t.onerror = res; });
 }
 
 /* ---------------- 同期（Notes と同じ GitHub Gist 方式） ---------------- */
