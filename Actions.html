@@ -1252,6 +1252,17 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 setInterval(() => { if(document.visibilityState === 'visible' && syncOn() && !edit) syncNow(false); }, 60000);
+/* 同じ Actions をほかの窓（Notes の中のパネルなど）で変えたら、すぐ取り込んで表示を合わせる。
+   古い内容のまま保存して、ほかの窓で変えた分を上書きしないように */
+window.addEventListener('storage', e => {
+  if(e.key !== DK || !e.newValue) return;
+  try{
+    const d = JSON.parse(e.newValue);
+    const other = Array.isArray(d.items) ? d.items.filter(validItem) : [];
+    const merged = mergeItems(items, other);
+    if(sig(merged) !== sig(items)){ items = merged; if(!edit) render(); }
+  }catch(err){}
+});
 /* 朝5時をまたいだら、Done ボタンを元の色に戻す（回数はそのまま） */
 let dayNow = today();
 setInterval(() => { const d = today(); if(d !== dayNow){ dayNow = d; if(!edit && prefs.tab !== 'set') render(); } DOGS.season(); }, 30000);
