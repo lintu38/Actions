@@ -43,6 +43,7 @@ input,textarea,select{font:inherit;color:inherit}
 .addbtn svg{width:20px;height:20px}
 
 body[data-tab=habit]{--tc:#e8c98f;--acc:#b98a36;--accsoft:#f7edd7;--rgb:185,138,54}
+body[data-tab=step]{--tc:#cfd3a8;--acc:#8b9855;--accsoft:#eef0dd;--rgb:139,152,85}
 body[data-tab=once]{--tc:#b8ced2;--acc:#5f8b93;--accsoft:#e3eef0;--rgb:95,139,147}
 body[data-tab=word]{--tc:#dfc3c6;--acc:#b58a91;--accsoft:#f4e7e8;--rgb:181,138,145}
 body[data-tab=set]{--tc:#ddd6cf;--acc:#a8957f;--accsoft:#eee8e1;--rgb:168,149,127}
@@ -51,7 +52,7 @@ body[data-tab=set]{--tc:#ddd6cf;--acc:#a8957f;--accsoft:#eee8e1;--rgb:168,149,12
   scrollbar-width:thin;scrollbar-color:rgba(90,75,80,.2) transparent}
 .col{max-width:760px;margin:0 auto}
 .empty{text-align:center;color:var(--muted);font-size:12.5px;padding:46px 20px;line-height:2}
-.empty .eball{width:56px;margin:0 auto 10px;opacity:.85}
+.empty .eball{width:50px;margin:0 auto 12px;opacity:.85}
 
 .row{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;
   margin:0 0 9px;box-shadow:var(--shadow)}
@@ -62,7 +63,7 @@ body[data-tab=set]{--tc:#ddd6cf;--acc:#a8957f;--accsoft:#eee8e1;--rgb:168,149,12
 .grip svg{width:14px;height:20px}
 .main{flex:1 1 auto;min-width:0}
 .txt{white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;font-size:15px;line-height:1.65}
-.row.habit .txt,.row.once .txt{font-weight:300;color:#2e282a;-webkit-text-stroke:.22px currentColor}
+.row.habit .txt,.row.step .txt,.row.once .txt{font-weight:300;color:#2e282a;-webkit-text-stroke:.22px currentColor}
 .row.word .txt,.sheet textarea.serif{font-weight:400;font-size:14.5px;line-height:1.8;color:#3c3638}
 .cite{text-align:right;font-size:12.5px;color:#6e6668;margin:-4px 16px 0;padding-bottom:11px;letter-spacing:.02em;font-weight:400}
 .cite i{font-style:italic}
@@ -140,18 +141,16 @@ body[data-tab=word] .ball::after,body[data-tab=word] .cnt,body[data-tab=word] .t
 
 /* ---------- 下タブ ---------- */
 .tabs{flex:0 0 auto;background:#ece7df;padding:0 0 env(safe-area-inset-bottom);
-  display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  display:grid;grid-template-columns:repeat(5,1fr);gap:0}
 .tabs button{display:flex;align-items:center;justify-content:center;padding:7px 0 8px;border-radius:0;
   color:#a39587;background:#ece7df;border-top:3px solid var(--ln);transition:background .15s,color .15s}
 .tabs button[data-tab=habit]{--c:#e8c98f;--ln:#dcb866}
+.tabs button[data-tab=step]{--c:#cfd3a8;--ln:#a9b46e}
 .tabs button[data-tab=once]{--c:#b8ced2;--ln:#86adb5}
 .tabs button[data-tab=word]{--c:#dfc3c6;--ln:#cea1a8}
 .tabs button[data-tab=set]{--c:#ddd6cf;--ln:#bfb2a2}
 .tabs button svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tabs button.on{background:var(--c);color:var(--brown)}
-/* 設定タブは小さめ */
-.tabs{grid-template-columns:repeat(3,1fr) 64px}
-.tabs button[data-tab=set] svg{width:19px;height:19px}
 
 /* ---------- 設定 ---------- */
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 14px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
@@ -434,6 +433,7 @@ body.locked .top,body.locked .scroll,body.locked .tabs,body.locked .dogstrip{vis
 <div class="dogstrip" id="dogStrip"></div>
 <nav class="tabs" id="tabs">
   <button data-tab="habit" aria-label="Habits"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8"/><path d="M20 4v4h-4"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 16"/><path d="M4 20v-4h4"/></svg></button>
+  <button data-tab="step" aria-label="Little by Little"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7.6"/><path d="M7.5 11.2l2.3 2.3 4.3-4.6"/><circle cx="19.6" cy="19.6" r="1.9"/></svg></button>
   <button data-tab="once" aria-label="One-offs"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg></button>
   <button data-tab="word" aria-label="Words"><svg viewBox="0 0 24 24"><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></button>
   <button data-tab="set" aria-label="Settings"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg></button>
@@ -461,14 +461,14 @@ body.locked .top,body.locked .scroll,body.locked .tabs,body.locked .dogstrip{vis
    GitHub の非公開 Gist を通して Notes と同じ方式で同期します。
    ===================================================== */
 const APP_VER = 'Actions 2026-10-29 d';
-const BALL_ART = `<svg viewBox="0 0 64 70" aria-hidden="true"><g fill="#C9A87C"><path d="M32 33c-8 0-16.5 9.5-16.5 17.2 0 5.6 4.3 8.8 9.2 8.8 3 0 5-1.5 7.3-1.5s4.3 1.5 7.3 1.5c4.9 0 9.2-3.2 9.2-8.8C48.5 42.5 40 33 32 33z"/><ellipse cx="13.6" cy="30" rx="6" ry="7.6" transform="rotate(-22 13.6 30)"/><ellipse cx="25" cy="16.6" rx="6.4" ry="8.2" transform="rotate(-7 25 16.6)"/><ellipse cx="39" cy="16.6" rx="6.4" ry="8.2" transform="rotate(7 39 16.6)"/><ellipse cx="50.4" cy="30" rx="6" ry="7.6" transform="rotate(22 50.4 30)"/></g><g fill="#E4D2B4" opacity=".75"><ellipse cx="26.5" cy="41.5" rx="4.2" ry="2.6" transform="rotate(-28 26.5 41.5)"/><ellipse cx="11.8" cy="26.4" rx="1.8" ry="2.6" transform="rotate(-22 11.8 26.4)"/><ellipse cx="23" cy="12.4" rx="2" ry="2.8" transform="rotate(-7 23 12.4)"/><ellipse cx="37" cy="12.4" rx="2" ry="2.8" transform="rotate(7 37 12.4)"/><ellipse cx="48.4" cy="26.4" rx="1.8" ry="2.6" transform="rotate(22 48.4 26.4)"/></g></svg>`;
+const BALL_ART = `<svg viewBox="0 0 64 70" aria-hidden="true"><defs><radialGradient id="tbg" cx="33%" cy="26%" r="76%"><stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".4" stop-color="#fff" stop-opacity=".10"/><stop offset=".76" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#8C7457" stop-opacity=".2"/></radialGradient></defs><path d="M15.4 6.4 25.6 13.6 18 22.6Z" fill="#C9A87C"/><path d="M48.6 6.4 38.4 13.6 46 22.6Z" fill="#C9A87C"/><path d="M17.4 10 23.2 14.1 19.2 19.2Z" fill="#E4D2B4"/><path d="M46.6 10 40.8 14.1 44.8 19.2Z" fill="#E4D2B4"/><ellipse cx="32" cy="36" rx="28.5" ry="27.5" fill="#EDE6D6"/><path d="M32 8.5c-15.7 0-28.5 12.3-28.5 27.5 0 1.6.1 3.2.4 4.7 6.4 2.6 12.6 3.4 18.5 2.5 4.2-.7 7.4-2.8 9.6-6.3 2.2 3.5 5.4 5.6 9.6 6.3 5.9.9 12.1.1 18.5-2.5.3-1.5.4-3.1.4-4.7C60.5 20.8 47.7 8.5 32 8.5z" fill="#C9A87C"/><ellipse cx="21.6" cy="21.6" rx="4.6" ry="2.9" fill="#EDE6D6"/><ellipse cx="42.4" cy="21.6" rx="4.6" ry="2.9" fill="#EDE6D6"/><ellipse cx="20.4" cy="33.4" rx="3.5" ry="4" fill="#372C22"/><ellipse cx="43.6" cy="33.4" rx="3.5" ry="4" fill="#372C22"/><ellipse cx="22" cy="31.6" rx="1.1" ry="1.3" fill="#fff" opacity=".85"/><ellipse cx="45.2" cy="31.6" rx="1.1" ry="1.3" fill="#fff" opacity=".85"/><ellipse cx="32" cy="39.4" rx="9.6" ry="8.6" fill="#F5F0E4"/><ellipse cx="32" cy="35" rx="4.2" ry="3.3" fill="#372C22"/><path d="M32 38.4v2.2" stroke="#372C22" stroke-width="1.2" stroke-linecap="round" fill="none"/><path d="M32 40.6c-1 2.4-4.6 2.4-5.6 0M32 40.6c1 2.4 4.6 2.4 5.6 0" stroke="#372C22" stroke-width="1.2" stroke-linecap="round" fill="none"/><ellipse cx="32" cy="36" rx="28.5" ry="27.5" fill="url(#tbg)"/><ellipse cx="9.6" cy="29.5" rx="2.4" ry="4.9" fill="#fff" opacity=".44" transform="rotate(20 9.6 29.5)"/></svg>`;
 const BALL_COATS = [
   {coat:'#C9A87C', earIn:'#E4D2B4', face:'#EDE6D6', muz:'#F5F0E4'},
   {coat:'#E0C8A2', earIn:'#F0E3CB', face:'#F6F0E2', muz:'#FBF7EC'},
   {coat:'#A97F55', earIn:'#D6BE9C', face:'#E8DECA', muz:'#F2EADA'}
 ];
 /* 5個目ごとのボールは、そのタブの色 */
-const TAB_BALL = {habit:['#dcb866', '#f1dfae'], once:['#86adb5', '#cfe1e4'], word:['#cea1a8', '#ecd5d8'], set:['#bfb2a2', '#e4ddd4']};
+const TAB_BALL = {habit:['#dcb866', '#f1dfae'], step:['#a9b46e', '#dde2c0'], once:['#86adb5', '#cfe1e4'], word:['#cea1a8', '#ecd5d8'], set:['#bfb2a2', '#e4ddd4']};
 const tabBall = tab => { const c = TAB_BALL[tab] || TAB_BALL.habit; return BALL_ART.split('#C9A87C').join(c[0]).split('#E4D2B4').join(c[1]); };
 const COAT_SVG = BALL_COATS.map((c, i) => i === 0 ? BALL_ART :
   BALL_ART.split('#C9A87C').join(c.coat).split('#E4D2B4').join(c.earIn)
@@ -572,12 +572,16 @@ const touch = it => { it.upd = Date.now(); };
 let expanded = new Set();
 let showLog = false;
 let popId = null;
-const TITLES = {habit:'Habits', once:'One-offs', word:'Words', set:'Settings'};
+/* Little by Little（塵も積もれば山となる）は Habits と同じ動き */
+const HABITLIKE = tab => tab === 'habit' || tab === 'step';
+const TITLES = {habit:'Habits', step:'Little by Little', once:'One-offs', word:'Words', set:'Settings'};
 const GRIP = '<svg viewBox="0 0 14 20" fill="currentColor"><circle cx="4" cy="4" r="1.6"/><circle cx="10" cy="4" r="1.6"/><circle cx="4" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="4" cy="16" r="1.6"/><circle cx="10" cy="16" r="1.6"/></svg>';
 const BOOKMARK = '<svg class="bm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5h10a1 1 0 0 1 1 1V20l-6-4.2L6 20V4.5a1 1 0 0 1 1-1z"/></svg>';
 const ICON_EDIT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>';
 const ICON_DICE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="8.6" cy="8.6" r="1.25" fill="currentColor" stroke="none"/><circle cx="15.4" cy="8.6" r="1.25" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.25" fill="currentColor" stroke="none"/><circle cx="8.6" cy="15.4" r="1.25" fill="currentColor" stroke="none"/><circle cx="15.4" cy="15.4" r="1.25" fill="currentColor" stroke="none"/></svg>';
 const ICON_TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 7h15"/><path d="M9.5 7V5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v2"/><path d="M6.5 7l.9 11.2a2 2 0 0 0 2 1.8h5.2a2 2 0 0 0 2-1.8L17.5 7"/><path d="M10.2 11v5.2M13.8 11v5.2"/></svg>';
+/* 肉球（One Step と同じ形） */
+const PAW = '<svg viewBox="0 0 40 34" fill="#C9B49A"><ellipse cx="20" cy="25" rx="8.6" ry="7"/><ellipse cx="9.5" cy="14.5" rx="4" ry="5.2" transform="rotate(-18 9.5 14.5)"/><ellipse cx="16.5" cy="8" rx="3.7" ry="5"/><ellipse cx="24.5" cy="8" rx="3.7" ry="5"/><ellipse cx="31" cy="14.5" rx="4" ry="5.2" transform="rotate(18 31 14.5)"/></svg>';
 const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
 
 function render(){
@@ -587,7 +591,7 @@ function render(){
   document.body.dataset.tab = tab;
   const tcm = document.querySelector('meta[name=theme-color]'); if(tcm) tcm.content = '#f7f4ef';
   $('addBtn').style.visibility = tab === 'set' ? 'hidden' : 'visible';
-  $('rndBtn').style.display = (tab === 'habit' || tab === 'word') ? '' : 'none';
+  $('rndBtn').style.display = (tab === 'habit' || tab === 'step' || tab === 'word') ? '' : 'none';
   document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
   if(tab === 'set'){ renderSettings(); return; }
   let list = live(tab), logList = [];
@@ -600,9 +604,10 @@ function render(){
   }
   if(!list.length){
     const msg = {habit:'習慣はまだありません。<br>右上の ＋ から追加してください。',
+      step:'ちょっとずつ進める習慣は、まだありません。<br>右上の ＋ から追加してください。',
       once:'単発のタスクはまだありません。<br>右上の ＋ から追加してください。',
       word:'言葉はまだありません。<br>右上の ＋ から追加してください。'}[tab];
-    $('view').innerHTML = `<div class="empty"><div class="eball">${COAT_SVG[0]}</div>${msg}</div>`;
+    $('view').innerHTML = `<div class="empty"><div class="eball">${PAW}</div>${msg}</div>`;
     return;
   }
   $('view').innerHTML = list.map(rowHTML).join('') + logHTML;
@@ -631,8 +636,8 @@ function rowHTML(it){
   const fin = isFinished(it);
   let chips = '';
   if(!word){
-    if(it.date && !(it.tab === 'habit' && !(it.repeat && it.repeat.unit))){
-      const cls = fin ? '' : (it.date < t && it.tab !== 'habit') ? ' over' : it.date === t ? ' today' : '';
+    if(it.date && !(HABITLIKE(it.tab) && !(it.repeat && it.repeat.unit))){
+      const cls = fin ? '' : (it.date < t && !HABITLIKE(it.tab)) ? ' over' : it.date === t ? ' today' : '';
       chips += `<span class="chip${cls}">${esc(dateLabel(it.date))}</span>`;
     }
     if(it.repeat && it.repeat.unit) chips += `<span class="chip rep">↻ ${esc(repLabel(it.repeat))}</span>`;
@@ -661,7 +666,7 @@ function extHTML(it){
   {
     const n = it.done.length;
     if(!n){
-      body = '<div class="noball">まだ 0 回です。押すと、ここに肉球が並びます。</div>';
+      body = '<div class="noball">まだ 0 回です。押すと、ここにボールが並びます。</div>';
     }else{
       const shown = Math.min(n, BALL_CAP);
       let h = '';
@@ -681,7 +686,7 @@ function extHTML(it){
       <button data-act="edit" class="ic" aria-label="編集" title="編集">${ICON_EDIT}</button>
       <button data-act="undo"${it.done.length ? '' : ' disabled'}>Undo</button>
       <button data-act="reset" class="rst"${it.done.length ? '' : ' disabled'}>All Reset</button>
-      ${(it.tab === 'habit' || it.tab === 'word') ? `<button data-act="pick" class="ic pk${it.pick === false ? '' : ' on'}" aria-label="ランダム候補" title="${it.pick === false ? 'ランダム候補に入れる' : 'ランダム候補（押すと外す）'}">${ICON_DICE}</button>` : ''}
+      ${(HABITLIKE(it.tab) || it.tab === 'word') ? `<button data-act="pick" class="ic pk${it.pick === false ? '' : ' on'}" aria-label="ランダム候補" title="${it.pick === false ? 'ランダム候補に入れる' : 'ランダム候補（押すと外す）'}">${ICON_DICE}</button>` : ''}
       <button data-act="del" class="ic del" aria-label="Delete" title="Delete">${ICON_TRASH}</button>
     </div></div>`;
 }
@@ -930,7 +935,7 @@ function openSheet(it){
 }
 function drawSheet(){
   const e = edit, word = e.tab === 'word', r = e.repeat;
-  const kind = {habit:'習慣', once:'単発', word:'言葉'}[e.tab];
+  const kind = {habit:'習慣', step:'Little by Little', once:'単発', word:'言葉'}[e.tab];
   $('sheet').innerHTML = `<h2>${e._new ? kind + 'を追加' : kind + 'を編集'}</h2>
     <div class="f"><label>${word ? '言葉' : '内容'}</label>
       <textarea id="eText"${word ? ' class="serif"' : ''} placeholder="${word ? '残しておきたい言葉' : 'やること'}">${esc(e.text)}</textarea></div>
@@ -968,7 +973,7 @@ function drawSheet(){
       const unit = $('eUnit').value, d = $('eDate').value;
       $('eNwrap').style.display = (unit && unit !== 'weekday') ? '' : 'none';
       // Habits は繰り返しがあるときだけ日付を入れる
-      if(edit.tab === 'habit'){
+      if(HABITLIKE(edit.tab)){
         $('eDateF').style.display = unit ? '' : 'none';
         if(unit && !$('eDate').value) $('eDate').value = today();
       }
@@ -1002,7 +1007,7 @@ function saveSheet(){
     const days = [...$('sheet').querySelectorAll('.dow button.on')].map(b => +b.dataset.d);
     e.repeat = {unit, n: (unit && unit !== 'weekday') ? n : 1, days: unit === 'week' ? days : []};
     if(unit && !e.date) e.date = today();
-    if(e.tab === 'habit' && !unit) e.date = '';
+    if(HABITLIKE(e.tab) && !unit) e.date = '';
   }
   delete e._new;
   e.upd = Date.now();
@@ -1041,12 +1046,8 @@ function renderSettings(){
       <button class="btn ghost" id="dExp">書き出し（JSON）</button>
       <button class="btn ghost" id="dImp">読み込み（統合）</button>
     </div>
-    ${'showDirectoryPicker' in window ? `<div class="brow" style="margin-top:8px">
-      <button class="btn ghost" id="dDir">保存先を選ぶ…</button>
-      <span class="hint" id="dDirName" style="margin:0">書き出し先：（まだ選んでいません）</span></div>
-    <div class="hint">「Actions」フォルダの中の「Export」フォルダを選ぶと、以後はそこへ保存します。</div>` : ''}
     <input type="file" id="dFile" accept=".json,application/json" style="display:none">
-    <div class="hint">読み込みは今の内容に統合されます（上書きではありません）。項目数：習慣 ${live('habit').length} ／ 単発 ${live('once').length} ／ 言葉 ${live('word').length}</div>
+    <div class="hint">読み込みは今の内容に統合されます（上書きではありません）。項目数：習慣 ${live('habit').length} ／ Little by Little ${live('step').length} ／ 単発 ${live('once').length} ／ 言葉 ${live('word').length}</div>
   </div>
   <div class="card"><h3>同期（GitHub の非公開 Gist）</h3>
     <div class="f"><label>アクセストークン（gist 権限）</label>
@@ -1103,43 +1104,10 @@ function renderSettings(){
   $('pHide').onchange = e => { prefs.hideDone = e.target.checked; lsSet(PK, prefs); };
   $('pSound').onchange = e => { prefs.sound = e.target.checked; lsSet(PK, prefs); if(prefs.sound) fanfare(false); };
 
-  /* 書き出し：保存先のフォルダ（Actions/Export）が選んであればそこへ。選べないブラウザ（スマホなど）はダウンロード */
-  const expJson = () => JSON.stringify({app:'habits', v:1, at:Date.now(), items}, null, 1);
-  const expName = () => 'habits-' + today() + '.json';
-  const paintDir = async () => {
-    const el = $('dDirName'); if(!el) return;
-    const h = await expDirGet();
-    el.textContent = '書き出し先：' + (h ? h.name : '（まだ選んでいません）');
-  };
-  paintDir();
-  if($('dDir')) $('dDir').onclick = async () => {
-    try{
-      const h = await window.showDirectoryPicker({id:'actions-export', mode:'readwrite', startIn:'desktop'});
-      await expDirSet(h); paintDir(); toast('書き出し先を「' + h.name + '」にしました');
-    }catch(e){}
-  };
-  $('dExp').onclick = async () => {
-    if('showDirectoryPicker' in window){
-      try{
-        let h = await expDirGet();
-        if(!h){
-          toast('書き出し先に「Actions」フォルダの中の「Export」を選んでください');
-          h = await window.showDirectoryPicker({id:'actions-export', mode:'readwrite', startIn:'desktop'});
-          await expDirSet(h); paintDir();
-        }
-        if((await h.queryPermission({mode:'readwrite'})) !== 'granted'
-          && (await h.requestPermission({mode:'readwrite'})) !== 'granted') throw new Error('許可がありません');
-        const fh = await h.getFileHandle(expName(), {create:true});
-        const w = await fh.createWritable(); await w.write(expJson()); await w.close();
-        toast('「' + h.name + '」に ' + expName() + ' を書き出しました');
-        return;
-      }catch(e){
-        if(e && e.name === 'AbortError') return;      /* フォルダ選びをやめたとき */
-      }
-    }
-    const blob = new Blob([expJson()], {type:'application/json'});
+  $('dExp').onclick = () => {
+    const blob = new Blob([JSON.stringify({app:'habits', v:1, at:Date.now(), items}, null, 1)], {type:'application/json'});
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = expName(); document.body.appendChild(a); a.click(); a.remove();
+    a.download = 'habits-' + today() + '.json'; document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   };
   $('dImp').onclick = () => $('dFile').click();
@@ -1158,32 +1126,10 @@ function renderSettings(){
   };
 }
 
-/* 書き出し先フォルダの記憶（IndexedDB に置く） */
-function expDB(){
-  return new Promise(res => {
-    try{
-      const r = indexedDB.open('habits-fs', 1);
-      r.onupgradeneeded = () => r.result.createObjectStore('h');
-      r.onsuccess = () => res(r.result); r.onerror = () => res(null);
-    }catch(e){ res(null); }
-  });
-}
-async function expDirGet(){
-  const db = await expDB(); if(!db) return null;
-  return new Promise(res => {
-    const q = db.transaction('h', 'readonly').objectStore('h').get('exportDir');
-    q.onsuccess = () => res(q.result || null); q.onerror = () => res(null);
-  });
-}
-async function expDirSet(h){
-  const db = await expDB(); if(!db) return;
-  await new Promise(res => { const t = db.transaction('h', 'readwrite'); t.objectStore('h').put(h, 'exportDir'); t.oncomplete = res; t.onerror = res; });
-}
-
 /* ---------------- 同期（Notes と同じ GitHub Gist 方式） ---------------- */
 const GH = 'https://api.github.com', GHFILE = 'habits-sync.json';
 let syncBusy = false, syncAgain = false, syncState = {msg:'', err:false, cls:''};
-const validItem = i => i && typeof i.id === 'string' && ['habit', 'once', 'word'].includes(i.tab) && typeof i.text === 'string';
+const validItem = i => i && typeof i.id === 'string' && ['habit', 'step', 'once', 'word'].includes(i.tab) && typeof i.text === 'string';
 function mergeItems(a, b){
   const m = new Map();
   for(const i of a) m.set(i.id, i);
@@ -1311,17 +1257,6 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 setInterval(() => { if(document.visibilityState === 'visible' && syncOn() && !edit) syncNow(false); }, 60000);
-/* 同じ Actions をほかの窓（Notes の中のパネルなど）で変えたら、すぐ取り込んで表示を合わせる。
-   古い内容のまま保存して、ほかの窓で変えた分を上書きしないように */
-window.addEventListener('storage', e => {
-  if(e.key !== DK || !e.newValue) return;
-  try{
-    const d = JSON.parse(e.newValue);
-    const other = Array.isArray(d.items) ? d.items.filter(validItem) : [];
-    const merged = mergeItems(items, other);
-    if(sig(merged) !== sig(items)){ items = merged; if(!edit) render(); }
-  }catch(err){}
-});
 /* 朝5時をまたいだら、Done ボタンを元の色に戻す（回数はそのまま） */
 let dayNow = today();
 setInterval(() => { const d = today(); if(d !== dayNow){ dayNow = d; if(!edit && prefs.tab !== 'set') render(); } DOGS.season(); }, 30000);
@@ -1581,7 +1516,6 @@ const DOGS = (function(){
       if(dog.x < 2){ dog.x = 2; dog.dir = 1; }
       if(dog.x > W - 41){ dog.x = W - 41; dog.dir = -1; }
     }
-    /* 転がるボールは出さない */
     if(ball) moveBall(dt);
     paint(dog);
     zzz.style.transform = `translateX(${(dog.x + (dog.dir > 0 ? 27 : 2)).toFixed(1)}px)`;
@@ -1798,7 +1732,7 @@ $('tabs').addEventListener('click', e => {
   prefs.tab = b.dataset.tab; lsSet(PK, prefs); $('scroll').scrollTop = 0; render();
 });
 load();
-if(!['habit', 'once', 'word', 'set'].includes(prefs.tab)) prefs.tab = 'habit';
+if(!['habit', 'step', 'once', 'word', 'set'].includes(prefs.tab)) prefs.tab = 'habit';
 if(prefs.pin) showLock();
 render();
 DOGS.toggle(true);   // 犬はいつもいる
